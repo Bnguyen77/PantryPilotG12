@@ -1,0 +1,17 @@
+{% extends "partials/_layout.html" %}
+{% include "partials/_header.html" %}
+
+{%block content%}
+<h1>Index page </h1>
+{% if 'user_id' in session %}
+    <!-- User is in session -->
+    <h2>Welcome, {{ session['user_name'] }}!</h2>
+    <!-- Add other content or actions for authenticated users -->
+{% else %}
+    <!-- User is not in session -->
+    <p>Please log in to access this content.</p>
+    <!-- Add login form or other content for non-authenticated users -->
+{% endif %}
+
+
+{%endblock%}

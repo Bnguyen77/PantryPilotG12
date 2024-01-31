@@ -1,0 +1,42 @@
+
+<style>
+  #hideMe {
+    -moz-animation: cssAnimation 0s ease-in 5s forwards;
+    /* Firefox */
+    -webkit-animation: cssAnimation 0s ease-in 5s forwards;
+    /* Safari and Chrome */
+    -o-animation: cssAnimation 0s ease-in 5s forwards;
+    /* Opera */
+    animation: cssAnimation 0s ease-in 5s forwards;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+}
+
+@keyframes cssAnimation {
+    to {
+        width:0;
+        height:0;
+        overflow:hidden;
+    }
+}
+@-webkit-keyframes cssAnimation {
+    to {
+        width:0;
+        height:0;
+        visibility:hidden;
+    }
+}
+</style>
+
+
+{% with messages = get_flashed_messages() %}
+    {% if messages %} 
+        {% for msg in messages %}
+        <div class="alert alert-warning alert-dismissible fade show" id="hideMe" data-bs-dismiss="alert"
+        style="position: absolute; bottom: 0; right: 0; width: 300px; float:right ;box-shadow: 25px -20px 38px -14px rgba(130,125,130,1);"
+        role="alert">
+          <strong>{{ msg }}</strong>
+        </div>
+        {% endfor %} 
+    {% endif %} 
+{% endwith %}
