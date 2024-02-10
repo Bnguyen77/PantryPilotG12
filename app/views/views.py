@@ -81,3 +81,10 @@ def logout():
         flash(f"you have been logout, {user}", "info")
         return redirect(url_for("views.index"))
     
+@views.route("/campuses", methods=["GET"])
+def campuses():
+    return render_template("campuses.html")
+
+@views.route("/faqs", methods=["GET"])
+def faqs():
+    return render_template("faqs.html")

@@ -19,9 +19,7 @@
 			aria-labelledby="offcanvasDarkNavbarLabel"
 		>
 			<div class="offcanvas-header">
-				<a href="{{ url_for('views.user_route') }}"
-					><img src="/static/logos/user-white.svg" alt="user-logo"
-				/></a>
+				
 				{% if 'user_id' in session %}
 				<!-- User is in session -->
 				<h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">
@@ -32,21 +30,36 @@
 				{% else %}
 				<!-- User is not in session -->
 				<h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">
-					Pantry pilot
+					Menu
 				</h5>
 				<!-- Add login form or other content for non-authenticated users -->
 				{% endif %}
-
+				<a href="{{ url_for('views.user_route') }}"
+					><img src="/static/logos/user-white.svg" alt="user-logo"
+				/></a>
 				<!-- <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button> -->
 			</div>
 			<div class="offcanvas-body">
 				<ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+					<form class="d-flex mt-3" role="search">
+						<input
+							class="form-control me-2"
+							type="search"
+							placeholder="Search..."
+							aria-label="Search"
+						/>
+						<button class="btn btn-success" type="submit">Enter</button>
+					</form>
 					<li class="nav-item">
 						<a class="nav-link active" aria-current="page" href="{{ url_for('views.index') }}">Home</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="#">Link</a>
+						<a class="nav-link active" aria-current="page" href="{{ url_for('views.campuses') }}">Participating Campuses</a>
 					</li>
+					<li class="nav-item">
+						<a class="nav-link active" aria-current="page" href="{{ url_for('views.faqs') }}">FAQ's</a>
+					</li>
+					<!-- commenting out just in case we want to implement a dropdown in the side menu
 					<li class="nav-item dropdown">
 						<a
 							class="nav-link dropdown-toggle"
@@ -55,7 +68,7 @@
 							data-bs-toggle="dropdown"
 							aria-expanded="false"
 						>
-							Dropdown
+							Testing2
 						</a>
 						<ul class="dropdown-menu dropdown-menu-dark">
 							<li><a class="dropdown-item" href="#">Action</a></li>
@@ -66,16 +79,8 @@
 							<li><a class="dropdown-item" href="#">Something else here</a></li>
 						</ul>
 					</li>
+					-->
 				</ul>
-				<form class="d-flex mt-3" role="search">
-					<input
-						class="form-control me-2"
-						type="search"
-						placeholder="Search"
-						aria-label="Search"
-					/>
-					<button class="btn btn-success" type="submit">Search</button>
-				</form>
 			</div>
 		</div>
 
