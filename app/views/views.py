@@ -32,7 +32,7 @@ def register():
         existing_username = User.query.filter_by(user_name=form.user_name.data).first()
         existing_email = User.query.filter_by(email=form.email.data).first()   
         if existing_email or existing_username:
-            flash("Email or username has been used", "info")
+            flash("Email or Username has been used", "info")
             return render_template("register.html", form = form)
         
         else:
@@ -78,6 +78,13 @@ def logout():
         user = session["user_name"]
         session.pop("user_name", None)
         session.pop("user_id", None)   
-        flash(f"you have been logout, {user}", "info")
+        flash(f"You have been logged out, {user}", "info")
         return redirect(url_for("views.index"))
     
+@views.route("/campuses", methods=["GET"])
+def campuses():
+    return render_template("campuses.html")
+
+@views.route("/faqs", methods=["GET"])
+def faqs():
+    return render_template("faqs.html")
