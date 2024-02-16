@@ -28,13 +28,11 @@
 }
 </style>
 
-<!--I think this is not working properly because the flashed messages never leave fully-->
-
 {% with messages = get_flashed_messages() %}
     {% if messages %} 
         {% for msg in messages %}
         <div class="alert alert-warning alert-dismissible fade show" id="hideMe" data-bs-dismiss="alert"
-        style="position: absolute; bottom: 0; right: 0; width: 300px; float:right ;box-shadow: 25px -20px 38px -14px rgba(130,125,130,1);"
+        style="position: absolute; bottom: 0; right: 0; float:right ;box-shadow: 25px -20px 38px -14px rgba(130,125,130,1);"
         role="alert">
           <strong>{{ msg }}</strong>
         </div>

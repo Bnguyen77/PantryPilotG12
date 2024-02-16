@@ -62,9 +62,11 @@ def login():
            
             # Store user information in the session (customize as needed)
             session['user_id'] = existing_username.id
-            session['user_name'] = existing_username.user_name  
+            session['user_name'] = existing_username.user_name
+            session['email'] = existing_username.email
+            session['name'] = existing_username.name
             session.permanent = True
-            flash('Login successful!', 'success')
+            flash('Login successful!', 'login')
             return redirect(url_for('views.index')) 
         else:
             flash('Invalid username or password. Please try again.', 'error')
@@ -85,6 +87,6 @@ def logout():
 def campuses():
     return render_template("campuses.html")
 
-@views.route("/faqs", methods=["GET"])
-def faqs():
-    return render_template("faqs.html")
+@views.route("/about", methods=["GET"])
+def about():
+    return render_template("about.html")
