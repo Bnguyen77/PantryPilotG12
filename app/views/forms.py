@@ -10,13 +10,13 @@ class LoginForm(FlaskForm):
 
 
 class RegisterForm(FlaskForm):
-    user_name = StringField("User name", validators=[DataRequired()], render_kw={"placeholder": "Enter your username"})
-    name = StringField("Name", validators=[DataRequired()],render_kw={"placeholder": "Your real name"})
-    email = EmailField("Email", validators=[DataRequired(), Email()],render_kw={"placeholder": "Enter your email"})
+    user_name = StringField("Username", validators=[DataRequired()], render_kw={"placeholder": "Username"})
+    name = StringField("Name", validators=[DataRequired()],render_kw={"placeholder": "Full name"})
+    email = EmailField("Email", validators=[DataRequired(), Email()],render_kw={"placeholder": "someone@example.com"})
     password = PasswordField("Password", validators=[
         DataRequired() ,
         EqualTo("repassword", message="Passwords must match"),
         Length (8, 20)
-        ],render_kw={"placeholder": "Enter Password"})
-    repassword = PasswordField("Confirm password", validators=[DataRequired()],render_kw={"placeholder": "Confirm Password"})
+        ],render_kw={"placeholder": "8-20 characters"})
+    repassword = PasswordField("Confirm password", validators=[DataRequired()],render_kw={"placeholder": "8-20 characters"})
     

@@ -31,6 +31,7 @@
 	}
 </style>
 
+
 <!--I think this is not working properly because the flashed messages never leave fully-->
 
 {% with messages = get_flashed_messages(with_categories = True) %} {% if
@@ -55,3 +56,6 @@ messages %} {% for category, msg in messages %}
 </div>
 
 {% endfor %} {% endif %} {% endwith %}
+
+
+
