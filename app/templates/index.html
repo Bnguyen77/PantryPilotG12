@@ -7,6 +7,9 @@
     <!-- User is in session -->
     <h2>Welcome, {{ session['user_name'] }}!</h2>
     <!-- Add other content or actions for authenticated users -->
+    {% include "partials/_orders.html" %}
+    
+
 {% else %}
     <!-- User is not in session -->
     <p>Please log in to access this content.</p>

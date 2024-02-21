@@ -13,3 +13,4 @@ class User(db.Model):
         return password == self.password
     
     
+# setting api call for user

@@ -1,41 +1,61 @@
-
 <style>
-  #hideMe {
-    -moz-animation: cssAnimation 0s ease-in 5s forwards;
-    /* Firefox */
-    -webkit-animation: cssAnimation 0s ease-in 5s forwards;
-    /* Safari and Chrome */
-    -o-animation: cssAnimation 0s ease-in 5s forwards;
-    /* Opera */
-    animation: cssAnimation 0s ease-in 5s forwards;
-    -webkit-animation-fill-mode: forwards;
-    animation-fill-mode: forwards;
-}
+	#hideMe {
+		-moz-animation: cssAnimation 0s ease-in 5s forwards;
+		/* Firefox */
+		-webkit-animation: cssAnimation 0s ease-in 5s forwards;
+		/* Safari and Chrome */
+		-o-animation: cssAnimation 0s ease-in 5s forwards;
+		/* Opera */
+		animation: cssAnimation 0s ease-in 5s forwards;
+		-webkit-animation-fill-mode: forwards;
+		animation-fill-mode: forwards;
+	}
 
-@keyframes cssAnimation {
-    to {
-        width:0;
-        height:0;
-        overflow:hidden;
-    }
-}
-@-webkit-keyframes cssAnimation {
-    to {
-        width:0;
-        height:0;
-        visibility:hidden;
-    }
-}
+	@keyframes cssAnimation {
+		to {
+			margin: 0;
+			padding: 0;
+			width: 0;
+			height: 0;
+			overflow: hidden;
+		}
+	}
+	@-webkit-keyframes cssAnimation {
+		to {
+			margin: 0;
+			padding: 0;
+			width: 0;
+			height: 0;
+			visibility: hidden;
+		}
+	}
 </style>
 
-{% with messages = get_flashed_messages() %}
-    {% if messages %} 
-        {% for msg in messages %}
-        <div class="alert alert-warning alert-dismissible fade show" id="hideMe" data-bs-dismiss="alert"
-        style="position: absolute; bottom: 0; right: 0; float:right ;box-shadow: 25px -20px 38px -14px rgba(130,125,130,1);"
-        role="alert">
-          <strong>{{ msg }}</strong>
-        </div>
-        {% endfor %} 
-    {% endif %} 
-{% endwith %}
+
+<!--I think this is not working properly because the flashed messages never leave fully-->
+
+{% with messages = get_flashed_messages(with_categories = True) %} {% if
+messages %} {% for category, msg in messages %}
+<div
+	class="alert {% if category == 'info' %} alert-info {% elif category == 'success' %} alert-success {% elif category == 'error' %} alert-danger {% else %} alert-warning {% endif %} alert-success alert-dismissible fade show"
+	id="hideMe"
+	data-bs-dismiss="alert"
+	style="
+		position: absolute;
+		text-align: center;
+		bottom: 0;
+		right: 0;
+		padding: 10px;
+		width: 400px;
+		float: right;
+		box-shadow: 25px -20px 38px -14px rgba(130, 125, 130, 0.8);
+	"
+	role="alert"
+>
+	<strong>{{ msg }}</strong>
+</div>
+
+{% endfor %} {% endif %} {% endwith %}
+
+
+
