@@ -1,0 +1,36 @@
+<!-- List of avail orders -->
+<style>
+	/* Custom CSS for horizontal scroll */
+	.scrollable-cards {
+		overflow-x: auto;
+		white-space: nowrap;
+		padding-bottom: 15px; /* to ensure the last card is not partially hidden */
+	}
+
+	/* Optional: Adjust card width */
+	.card {
+		width: 400px; /* Adjust as needed */
+		padding: 20px;
+		display: inline-block;
+		margin-right: 10px; /* Adjust spacing between cards */
+	}
+</style>
+
+<div class="container mt-5">
+	<div class="scrollable-cards">
+		{% for order in available_orders %}
+
+		<div class="card">
+			<div class="card-body">
+				<h5 class="card-title display-4">Order: {{ order.id }}</h5>
+				<p class="card-text">items: {{ order.items }}</p>
+				<h6 class="card-title">Donor: {{ order.donor }}</h6>
+				<a href="#" class="btn btn-primary">expand</a>
+			</div>
+		</div>
+
+		{% endfor %}
+
+		<!-- Add more cards as needed -->
+	</div>
+</div>
