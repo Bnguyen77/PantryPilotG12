@@ -1,38 +1,44 @@
 {% extends "partials/_layout.html" %} {% include "partials/_header.html" %}
 {%block content%}
-
 <h1>BIO page</h1>
 <!-- app/templates/user.html -->
 
-
-
+<!-- Profile page -->
 <div class="container mt-4">
-    <div class="card">
-        <div class="card-header">
-            <h5>User Information</h5>
-        </div>
-        <div class="card-body">
-            <p class="card-info">Name: {{ session['name'] }}</p>
-            <p class="card-info">Username: {{ session['user_name'] }}</p>
-            <p class="card-info">Email: {{ session['email'] }}</p>
-            <p class="card-info">User ID: {{ session['user_id'] }}</p>
-
-            <!-- Add more user information fields as needed -->
-        </div>
-    </div>
-</div>
-
-
-
-<div class="container mt-4">
-	<div class="card">
-		<div class="card-header">User Information</div>
-		<div class="card-body">
-			<h5 class="card-title">Welcome, {{ user.name }}!</h5>
-			<p class="card-text">Email: {{ user.email }}</p>
-			<!-- Add more user information fields as needed -->
+	<div class="row justify-content-center">
+		<div class="col-md-6">
+			<div class="card">
+				<div class="card-body">
+					<div class="row align-items-center">
+						<!-- Profile photo column -->
+						<div class="col-auto">
+							<div class="profile-photo">
+								<!-- Add your profile photo here -->
+							</div>
+						</div>
+						<!-- User information column -->
+						<div class="col">
+							<h5 class="card-title">{{ user.name }}</h5>
+							<p class="card-text">{{ user.email }}</p>
+							<!-- Add more user information fields as needed -->
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
+
+<!-- Custom CSS -->
+<style>
+	.profile-photo {
+		width: 150px;
+		height: 150px;
+		background-color: #f0f0f0;
+		border-radius: 50%;
+		/* Adjust margin as needed */
+		margin-right: 20px; /* Space between profile photo and user information */
+	}
+</style>
 
 {%endblock%}

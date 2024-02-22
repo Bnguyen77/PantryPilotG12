@@ -1,2 +1,3 @@
 # app/controllers/__init__.py
-# from .user_controller import *
+
+from .auth_controller import *

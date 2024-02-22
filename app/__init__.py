@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 # Import and initialize the models
 init_app(app)
-app.permanent_session_lifetime = timedelta(minutes=5)
+app.permanent_session_lifetime = timedelta(minutes=20)
 
 @app.cli.command("drop_db")
 def drop_db_command():
