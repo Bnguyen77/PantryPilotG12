@@ -3,12 +3,18 @@ from datetime import datetime
 
 class Order(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False, default = 999)  # Nullable user_id
+    prefer_item = db.Column(db.String(200), nullable=False, default='none')
+    dietary_restriction = db.Column(db.String(200), nullable=False, default='none')
+    status = db.Column(db.String(20), nullable=False, default='pending')
+    delivery = db.Column(db.Boolean, nullable=False, default=False)  # True if delivery, False if pickup
+    location = db.Column(db.String(200),nullable=False, default='UIC')  # Location for delivery orders
+    request_time = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    dispense_time = db.Column(db.DateTime,nullable=True)  # Dispense time for completed orders
+
+    
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     user = db.relationship('User', backref=db.backref('orders', lazy=True))
-    pickup_time = db.Column(db.DateTime, nullable=True, default=None)  # Nullable pickup_time
-    items = db.Column(db.String(200), nullable=False)
-    status = db.Column(db.String(20), nullable=True, default=None)
-    donor = db.Column(db.String(20), nullable=True, default=None)
+    
     
     @classmethod
     def get_order_count(cls):

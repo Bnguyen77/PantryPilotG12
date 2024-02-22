@@ -20,3 +20,5 @@ class RegisterForm(FlaskForm):
         ],render_kw={"placeholder": "8-20 characters"})
     repassword = PasswordField("Confirm password", validators=[DataRequired()],render_kw={"placeholder": "8-20 characters"})
     
+
+    
