@@ -84,7 +84,7 @@ def index():
         orders_by_user_id = Order.query.filter_by(user_id=user_id).all()
         return render_template("index.html", orders_by_user_id = orders_by_user_id)
     else:
-        return render_template("index.html")
+        return redirect(url_for("views.login"))
 
 
 @views.route("/user_route", methods=["GET"])
@@ -124,6 +124,10 @@ def faqs():
 @views.route("/about", methods=["GET"])
 def about():
     return render_template("about.html")
+
+@views.route("/contact", methods=["GET"])
+def contact():
+    return render_template("contact.html")
 
 
 @views.route('/order_request', methods=['GET', 'POST'])
