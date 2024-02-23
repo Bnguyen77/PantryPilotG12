@@ -4,10 +4,11 @@ from ..models.order import Order
 from ..views.forms import LoginForm, RegisterForm
 
 
-
 views = Blueprint("views", __name__)
 
-#routing for authentication
+# routing for authentication
+
+
 @views.route("/register", methods=["GET", "POST"])
 def register():
     if 'user_id' in session:
@@ -62,7 +63,6 @@ def login():
 
         else:
             flash('Invalid username or password. Please try again.', 'error')
-
     return render_template("login.html", form=form)
 
 
@@ -76,15 +76,17 @@ def logout():
         return redirect(url_for("views.index"))
 
 
-# route for index
+# ROUTING FOR INDEX
 @views.route("/", methods=["GET"])
 def index():
     if 'user_id' in session:
         user_id = session.get('user_id')
         orders_by_user_id = Order.query.filter_by(user_id=user_id).all()
-        return render_template("index.html", orders_by_user_id = orders_by_user_id)
+        return render_template("index.html", orders_by_user_id=orders_by_user_id)
     else:
         return redirect(url_for("views.login"))
+
+# ROUTING FOR USER
 
 
 @views.route("/user_route", methods=["GET"])
@@ -109,6 +111,20 @@ def user():
         return redirect(url_for("views.index"))
 
 
+@views.route("/user_edit", methods=["POST"])
+def user_edit():
+    if 'user_id' in session:
+        user_id = session.get('user_id')
+     
+        new_bio = request.form.get('bio')
+
+        user = User.query.get(user_id)
+        user.bio = new_bio
+
+        db.session.commit()
+        return redirect(url_for("views.user"))
+    else:
+        return redirect(url_for("views.user"))
 
 
 @views.route("/campuses", methods=["GET"])
@@ -124,6 +140,7 @@ def faqs():
 @views.route("/about", methods=["GET"])
 def about():
     return render_template("about.html")
+
 
 @views.route("/contact", methods=["GET"])
 def contact():
