@@ -74,6 +74,7 @@ def logout():
         session.pop("user_id", None)
         flash(f"You have been logged out, {user}", "info")
         return redirect(url_for("views.index"))
+    return redirect(url_for('views.login'))
 
 
 # ROUTING FOR INDEX
@@ -115,7 +116,7 @@ def user():
 def user_edit():
     if 'user_id' in session:
         user_id = session.get('user_id')
-     
+
         new_bio = request.form.get('bio')
 
         user = User.query.get(user_id)

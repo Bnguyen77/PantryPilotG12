@@ -1,24 +1,38 @@
-{% extends "partials/_layout.html" %}
-{% include "partials/_header.html" %}
-
+{% extends "partials/_layout.html" %} {% include "partials/_header.html" %}
 {%block content%}
 <div class="container mt-4">
-    <div class="card">
-        <div class="card-header">
-            <h5>Project Overview</h5>
-        </div>
-        <div class="card-body">
-            <p class="card-info">
-                Pantry Pilot is an initiative that partners with local universities to combat student
-                hunger and food insecurity. Our innovative app creates a safety net for students in
-                need, making it easy for them to request food assistance. A dedicated network of
-                volunteers provides nutritious meals and access to campus food pantries, addresses
-                accessibility challenges, reduces food waste, and promotes community engagement
-                within educational institutions. The program allows students to focus on learning and
-                thrive while ensuring that no student goes hungry. The program is designed to ensure that no student
-                goes hungry, minimize food waste, strengthen community ties, and help students succeed academically.</p>
-        </div>
-    </div>
+	<div class="card">
+		<div class="card-header">
+			<h5>Project Overview</h5>
+		</div>
+		<div class="card-body">
+			<p class="card-info">
+				Pantry Pilot is an initiative that partners with local universities to
+				combat student hunger and food insecurity. Our innovative app creates a
+				safety net for students in need, making it easy for them to request food
+				assistance. A dedicated network of volunteers provides nutritious meals
+				and access to campus food pantries, addresses accessibility challenges,
+				reduces food waste, and promotes community engagement within educational
+				institutions. The program allows students to focus on learning and
+				thrive while ensuring that no student goes hungry. The program is
+				designed to ensure that no student goes hungry, minimize food waste,
+				strengthen community ties, and help students succeed academically.
+			</p>
+			<img
+				src="static/img/PantryPilotLogo.png"
+				alt="Pantry Pilot Logo"
+				class="center"
+			/>
+		</div>
+	</div>
 </div>
+<style>
+	.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 25%;
+  }
+</style>
 
 {%endblock%}
