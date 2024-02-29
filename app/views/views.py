@@ -1,75 +1,32 @@
 from flask import render_template, Blueprint, request, redirect, url_for, session, flash
 from ..models.user import User, db
 from ..models.order import Order
-from ..views.forms import LoginForm, RegisterForm
+from ..ults.forms import LoginForm, RegisterForm
+from ..ults._emailAPI import register_email
+
 import smtplib, ssl
-from app import app
+# from app import app
 
 views = Blueprint("views", __name__)
 
 # routing for authentication
 
-
-@views.route("/register", methods=["GET", "POST"])
+@views.route("/register", methods=["GET"])
 def register():
     if 'user_id' in session:
         flash("user in session", "warning")
         return redirect(url_for("views.index"))
-    form = RegisterForm(request.form)
-    if request.method == "POST" and form.validate():
-        existing_username = User.query.filter_by(
-            user_name=form.user_name.data).first()
-        existing_email = User.query.filter_by(email=form.email.data).first()
-        if existing_email or existing_username:
-            flash("Email or Username has been used", "info")
-            return render_template("register.html", form=form)
-
-        else:
-
-            # hashed_password = generate_password_hash(form.password.data, method="sha256")
-            new_user = User(name=form.name.data, user_name=form.user_name.data,
-                            email=form.email.data, password=form.password.data)
-            db.session.add(new_user)
-            db.session.commit()
-
-            try:
-                register_email(new_user.email, new_user.name, new_user.user_name)
-            except Exception as e:
-                app.logger.error(f"Error sending confirmation email: {e}")
-                flash("Error sending confirmation email. Please try again.", "danger")
-
-            flash(
-                f"Registration successful...please log in!: {new_user.user_name}", "success")
-            return redirect(url_for('views.login'))
     else:
+        form = RegisterForm(request.form)
         return render_template("register.html", form=form)
 
 
-@views.route("/login", methods=["GET", "POST"])
+# @views.route("/login", methods=["GET", "POST"])
+@views.route("/login", methods=["GET"])
 def login():
     if 'user_id' in session:
         return redirect(url_for("views.index"))
-    form = LoginForm(request.form)  # retrive form info from login page
-    # if the user press login and the form is filled correcly
-    if request.method == "POST" and form.validate():
-        # check if the user existed in database by user_name
-        existing_username = User.query.filter_by(
-            user_name=form.user_name.data).first()
-        # if user DOES exist AND password is correct
-        if existing_username and existing_username.check_password(form.password.data):
-
-            # Store user information in the session (customize as needed)
-            session['user_id'] = existing_username.id
-            session['user_name'] = existing_username.user_name
-            session['email'] = existing_username.email
-            session['name'] = existing_username.name
-
-            session.permanent = True
-            flash('Login successful!', 'success')
-            return redirect(url_for('views.index'))
-
-        else:
-            flash('Invalid username or password. Please try again.', 'error')
+    form = LoginForm(request.form)
     return render_template("login.html", form=form)
 
 
@@ -83,20 +40,19 @@ def logout():
         return redirect(url_for("views.index"))
     return redirect(url_for('views.login'))
 
-
 # ROUTING FOR INDEX
 @views.route("/", methods=["GET"])
 def index():
     if 'user_id' in session:
         user_id = session.get('user_id')
         orders_by_user_id = Order.query.filter_by(user_id=user_id).all()
-        return render_template("index.html", orders_by_user_id=orders_by_user_id)
+        return render_template("index.html", orders_by_user_id = orders_by_user_id)
     else:
+        # This should redirect to landing page (before logged in), instead of views.login
         return redirect(url_for("views.login"))
 
+
 # ROUTING FOR USER
-
-
 @views.route("/user_route", methods=["GET"])
 def user_route():
     if 'user_id' in session:
@@ -119,21 +75,6 @@ def user():
         return redirect(url_for("views.index"))
 
 
-@views.route("/user_edit", methods=["POST"])
-def user_edit():
-    if 'user_id' in session:
-        user_id = session.get('user_id')
-
-        new_bio = request.form.get('bio')
-
-        user = User.query.get(user_id)
-        user.bio = new_bio
-
-        db.session.commit()
-        return redirect(url_for("views.user"))
-    else:
-        return redirect(url_for("views.user"))
-
 
 @views.route("/campuses", methods=["GET"])
 def campuses():
@@ -155,71 +96,10 @@ def contact():
     return render_template("contact.html")
 
 
-@views.route('/order_request', methods=['GET', 'POST'])
+@views.route('/order_request', methods=['GET'])
 def order_request():
-    if request.method == 'POST':
-        user_id = session.get('user_id')
-        # retrive data from request form
-        prefer_item = request.form.get('prefer_item')
-        dietary_restriction = request.form.get('dietary_restriction')
-        location = request.form.get('location')
-        delivery = 0
-        # Debug statements to check the value of location
-        if location is not None:
-            if 'uic' in location.lower():
-                delivery = 0
-            else:
-                delivery = 1
-
-        # After processing the form data, you can redirect to another page
-
-        new_order = Order(
-            prefer_item=prefer_item,
-            dietary_restriction=dietary_restriction,
-            location=location,
-            delivery=delivery,
-            user_id=user_id
-        )
-
-        db.session.add(new_order)
-        db.session.commit()
-
-        return redirect(url_for('views.index'))
-    else:
-        # Render the order request form template
-        return render_template('order_request_form.html')
-
-
-@views.route('/submit_order_success')
-def submit_order_success():
-    # Render a success page after submitting the order
-    return render_template('submit_order_success.html')
-
-
-def register_email(email,name,username):
-    port = 465  # For SSL
-    smtp_server = "smtp.gmail.com"
-    sender_email = "pantrypilotuic@gmail.com"
-    receiver_email = email
-    password = "etsj gzqa aekn jqbu"
-    message = f"""\
-Subject: Welcome to Pantry Pilot!
-
-Dear {name},
-
-
-This email is to confirm you have made a Pantry Pilot account with the username {username}.
-Congratulations on successfully registering, we hope you get great use out of the service!
-For all inquiries, please email us at pantrypilotuic@gmail.com.
+    return redirect (url_for('views.index'))
+        
 
 
 
-
-From,
-Pantry Pilot Team"""
-
-
-    context = ssl.create_default_context()
-    with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
-        server.login(sender_email, password)
-        server.sendmail(sender_email, receiver_email, message)

@@ -29,7 +29,7 @@
 					<h2 class="text-center mb-4">Request Orders</h2>
 
                     <!-- Order Form -->
-                    <form method="POST" action="/order_request">
+                    <form method="POST" action="{{url_for('order_controller.order_request')}}">
                         <div class="input-group mb-3">
                             <div class="input-group-text">
                                 <input class="form-check-input mt-0" type="checkbox" id="enableItems" aria-label="Checkbox for enabling items input" />
