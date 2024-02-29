@@ -2,7 +2,7 @@ from flask import render_template, Blueprint, request, redirect, url_for, sessio
 from ..models.user import User, db
 from ..models.order import Order
 from ..views.forms import LoginForm, RegisterForm
-
+import smtplib, ssl
 
 views = Blueprint("views", __name__)
 
@@ -30,6 +30,7 @@ def register():
                             email=form.email.data, password=form.password.data)
             db.session.add(new_user)
             db.session.commit()
+            register_email(new_user.email,new_user.name,new_user.user_name)
 
             flash(
                 f"Registration successful...please log in!: {new_user.user_name}", "success")
@@ -187,3 +188,33 @@ def order_request():
 def submit_order_success():
     # Render a success page after submitting the order
     return render_template('submit_order_success.html')
+
+
+def register_email(email,name,username):
+    port = 465  # For SSL
+    smtp_server = "smtp.gmail.com"
+    sender_email = "pantrypilotuic@gmail.com"
+    receiver_email = email
+    password = "etsj gzqa aekn jqbu"
+    message = f"""\
+Subject: Welcome to Pantry Pilot!
+
+
+Dear {name},
+
+
+This email is to confirm you have made a Pantry Pilot account with the username {username}.
+Congratulations on successfully registering, we hope you get great use out of the service!
+For all inquiries, please email us at pantrypilotuic@gmail.com.
+
+
+
+
+From,
+Pantry Pilot Team"""
+
+
+    context = ssl.create_default_context()
+    with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
+        server.login(sender_email, password)
+        server.sendmail(sender_email, receiver_email, message)
