@@ -39,7 +39,7 @@
             </div>
             <div class="modal-body">
 
-                <form id="editBioForm" method="POST" action="/user_edit">
+                <form id="editBioForm" method="POST" action="{{ url_for('user_controller.user_edit') }}">
                     <div class="mb-3">
                         <label for="userNameInput" class="form-label">User Name - (need work- authenticate for existing user_name)</label>
                         <input type="text" class="form-control" id="userNameInput" disabled value="{{ user.user_name }}">

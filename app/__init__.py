@@ -1,5 +1,7 @@
 from .views.views import views
 from .controllers.auth_controller import auth_controller
+from .controllers.user_controller import user_controller
+from .controllers.order_controller import order_controller
 from flask import Flask
 from .models import init_app, drop_database
 from datetime import timedelta
@@ -23,4 +25,5 @@ def drop_db_command():
 # # Register the blueprints for views
 app.register_blueprint(views)
 app.register_blueprint(auth_controller)
-
+app.register_blueprint(user_controller)
+app.register_blueprint(order_controller)
