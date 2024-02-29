@@ -3,6 +3,7 @@ from ..models.user import User, db
 from ..models.order import Order
 from ..views.forms import LoginForm, RegisterForm
 import smtplib, ssl
+from app import app
 
 views = Blueprint("views", __name__)
 
@@ -30,7 +31,12 @@ def register():
                             email=form.email.data, password=form.password.data)
             db.session.add(new_user)
             db.session.commit()
-            register_email(new_user.email,new_user.name,new_user.user_name)
+
+            try:
+                register_email(new_user.email, new_user.name, new_user.user_name)
+            except Exception as e:
+                app.logger.error(f"Error sending confirmation email: {e}")
+                flash("Error sending confirmation email. Please try again.", "danger")
 
             flash(
                 f"Registration successful...please log in!: {new_user.user_name}", "success")
@@ -198,7 +204,6 @@ def register_email(email,name,username):
     password = "etsj gzqa aekn jqbu"
     message = f"""\
 Subject: Welcome to Pantry Pilot!
-
 
 Dear {name},
 
