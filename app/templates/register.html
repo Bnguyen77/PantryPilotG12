@@ -1,3 +1,6 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='css/partials/_auth.css') }}"/>
+
+
 {% extends "partials/_layout.html" %}
 {% include "partials/_header.html" %}
 
@@ -79,14 +82,6 @@
         </div>
     </div>
 </div>
-<style>
-    .register_header{
-        margin: 15px;
-        text-align: center;
-        color: white;
-        font-size: 30px;
-        -webkit-text-stroke: 0.5px gray;
-    }
-</style>
+
 <!-- Add any additional scripts or links to external JS files if needed -->
 {% endblock %}
