@@ -1,0 +1,58 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+{% extends "partials/_layout.html" %}
+{% include "partials/_header.html" %}
+
+{%block content%}
+
+
+
+
+<div class="container">
+    <h1>Admin Page</h1>
+
+    <h2>Pending Delivery Orders</h2>
+    <div class="scrollable-card-deck">
+        {% for order in PDO %}
+            <div class="card mb-4 m-1">
+                <div class="card-body p-2">
+                    <h5 class="card-title">{{order.request_time.strftime('%d-%m-%Y') }}</h5>
+                    <h6 class="card-text">Address: {{ order.location }}</h6>
+                    <!-- Add more details as needed -->
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <h2>Pending Pickup Orders</h2>
+    <div class="scrollable-card-deck">
+        {% for order in PPO %}
+            <div class="card mb-4 m-1">
+                <div class="card-body p-2">
+                    <h5 class="card-title">{{order.request_time.strftime('%d-%m-%Y') }}</h5>
+                    <h6 class="card-text">Campus: {{ order.location }}</h6>
+                    <!-- Add more details as needed -->
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <h2>Completed Orders</h2>
+    <div class="scrollable-card-deck">
+        {% for order in CO %}
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Order ID: {{ order.id }}</h5>
+                    <p class="card-text">Campus: {{ order.location }}</p>
+                    <!-- Add more details as needed -->
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+</div>
+
+
+
+<!-- Custom CSS -->
+
+{%endblock%}

@@ -51,6 +51,7 @@ def Login():
             session['user_name'] = existing_username.user_name
             session['email'] = existing_username.email
             session['name'] = existing_username.name
+            session['role'] = existing_username.is_admin
 
             session.permanent = True
             flash('Login successful!', 'success')

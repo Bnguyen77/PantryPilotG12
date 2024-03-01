@@ -1,7 +1,13 @@
+<link
+	rel="stylesheet"
+	href="{{ url_for('static', filename='css/partials/_auth.css') }}"
+/>
+
 {% extends "partials/_layout.html" %} {% include "partials/_header.html" %} {%
 block content %}
 <div class="login_header">
-<h1>Login Page</h1>
+	<h1>Login Page</h1>
+</div>
 <div class="container">
 	<div class="row justify-content-center">
 		<div class="col-md-4">
@@ -57,16 +63,6 @@ block content %}
 		</div>
 	</div>
 </div>
-</div>
 
-<style>
-	.login_header {
-		margin: 15px;
-		text-align: center;
-		color: white;
-		font-size: 30px;
-		-webkit-text-stroke: 0.5px gray;
-	}
-</style>
 <!-- Add any additional scripts or links to external JS files if needed -->
 {% endblock %}

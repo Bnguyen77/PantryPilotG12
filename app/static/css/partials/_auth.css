@@ -1,0 +1,9 @@
+
+	.login_header, .register_header {
+		margin: 15px;
+		text-align: center;
+		color: white;
+		font-size: 30px;
+		-webkit-text-stroke: 0.5px gray;
+	}
+
