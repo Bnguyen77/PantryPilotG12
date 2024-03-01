@@ -1,10 +1,13 @@
-{% extends "partials/_layout.html" %} {% include "partials/_header.html" %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}"/>
 
+
+
+{% extends "partials/_layout.html" %} {% include "partials/_header.html" %}
 {%block content%}
 {% if 'user_id' in session %}
 <!-- User is in session -->
 <div class="username">
-	<h2>Welcome, {{ session['user_name'] }}!</h2>
+	<h2>Welcome, {{ session['user_name'], session['role'] }}!</h2>
 </div>
 <!-- Add other content or actions for authenticated users -->
 {% include "partials/_orders.html" %} 
@@ -14,22 +17,4 @@
 <!-- Add login form or other content for non-authenticated users -->
 
 {% endif %}
-<!-- Custom CSS -->
-<style>
-	.username {
-		margin: 10px;
-		text-align: center;
-		color: white;
-		font-size: 30px;
-		-webkit-text-stroke: 0.5px gray;
-	}
-
-	h1 {
-		margin: 10px;
-		text-align: left;
-		color: white;
-		font-size: 30px;
-		-webkit-text-stroke: 0.5px gray;
-	}
-</style>
 {%endblock%}

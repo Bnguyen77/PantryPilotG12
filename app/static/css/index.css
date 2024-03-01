@@ -1,0 +1,15 @@
+.username {
+    margin: 10px;
+    text-align: center;
+    color: white;
+    font-size: 30px;
+    -webkit-text-stroke: 0.5px gray;
+}
+
+h1 {
+    margin: 10px;
+    text-align: left;
+    color: white;
+    font-size: 30px;
+    -webkit-text-stroke: 0.5px gray;
+}

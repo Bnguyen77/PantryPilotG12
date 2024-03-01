@@ -1,0 +1,8 @@
+.scrollable-card-deck {
+    display: flex;
+    overflow-x: auto;
+}
+
+.card {
+    width: 200px;   
+}
