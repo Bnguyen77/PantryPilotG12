@@ -28,7 +28,7 @@ def Register():
                 register_email(new_user.email, new_user.name, new_user.user_name)
             except Exception as e:
                 # app.logger.error(f"Error sending confirmation email: {e}")
-                flash("Error sending confirmation email. Please try again.", "danger")
+                flash("Error sending registration email. Please try again.", "danger")
 
             flash(f"Registration successful...please log in!: {new_user.user_name}", "success")
             return redirect(url_for('views.login'))
