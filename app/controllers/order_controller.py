@@ -2,7 +2,7 @@ from flask import render_template, Blueprint, request, redirect, url_for, sessio
 from ..models.user import User, db
 from ..models.order import Order
 from ..ults.forms import LoginForm, RegisterForm
-from ..ults._emailAPI import register_email
+from ..ults._emailAPI import order_email
 # from app import app
 
 order_controller = Blueprint("order_controller", __name__)
@@ -33,5 +33,11 @@ def order_request():
 
     db.session.add(new_order)
     db.session.commit()
+
+    try:
+        order_email(session.get('email'), session.get('user_name'), new_order)
+    except Exception as e:
+        # app.logger.error(f"Error sending confirmation email: {e}")
+        flash("Error sending confirmation email. Please try again.", "danger")
 
     return redirect(url_for('views.index'))
