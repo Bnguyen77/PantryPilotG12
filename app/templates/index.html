@@ -1,20 +1,22 @@
-<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}"/>
-
-
+<link
+	rel="stylesheet"
+	href="{{ url_for('static', filename='css/index.css') }}"
+/>
 
 {% extends "partials/_layout.html" %} {% include "partials/_header.html" %}
-{%block content%}
-{% if 'user_id' in session %}
+{%block content%} {% if 'user_id' in session %}
 <!-- User is in session -->
 <div class="username">
 	<h2>Welcome, {{ session['user_name'], session['role'] }}!</h2>
 </div>
 <!-- Add other content or actions for authenticated users -->
-{% include "partials/_orders.html" %} 
-{% else %}
+<div class="container">
+	<div class="partial info">{% include "partials/_info.html" %}</div>
+	<div class="partial orders">{% include "partials/_orders.html" %}</div>
+</div>
+{%else %}
 <!-- User is not in session -->
 <p>Please log in to access this content.</p>
 <!-- Add login form or other content for non-authenticated users -->
 
-{% endif %}
-{%endblock%}
+{% endif %} {%endblock%}

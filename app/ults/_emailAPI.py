@@ -1,6 +1,8 @@
 import smtplib
 import ssl
 
+
+
 def register_email(email,name,username):
     port = 465  # For SSL
     smtp_server = "smtp.gmail.com"

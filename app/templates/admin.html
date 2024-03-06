@@ -1,58 +1,135 @@
-<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
-{% extends "partials/_layout.html" %}
-{% include "partials/_header.html" %}
+<link
+	rel="stylesheet"
+	href="{{ url_for('static', filename='css/admin.css') }}"
+/>
+{% extends "partials/_layout.html" %} {% include "partials/_header.html" %}
+{%block content %}
+<div class="container" style="width: 80%; background-color: white">
+	<div class="row justify-content-center">
+		<!-- Info box on the left -->
+		<div class="col-md-3">{% include "partials/_info.html" %}</div>
 
-{%block content%}
+		<!-- Container on the right -->
+		<div class="col-md-8" id="order-lists">
+			<h2>Pending Delivery Orders</h2>
+			<button
+				type="button"
+				class="btn btn-lg btn-danger"
+				data-toggle="popover"
+				title="Popover title"
+				data-content="And here's some amazing content. It's very engaging. Right?"
+			>
+				Click to toggle popover
+			</button>
 
+			<div class="scrollable-container">
+				<div class="scrollable-cards">
+					{% for order in PDO %}
+					<div class="col-mb-5 m-1">
+						<div class="card mb-4 m-1">
+							<div class="card-body p-1">
+								<div class="d-flex align-items-center px-1">
+									<img
+										id="avatar"
+										class="avatar"
+										src="{{ url_for('static', filename='avatars/' + order.user_avatar_url.avatar_url_s) }}"
+										alt="Avatar"
+									/>
+									<div class="d-grid">
+										<h5 class="card-text">{{ order.user.user_name }}</h5>
+										<h6 class="card-date">
+											{{ order.request_time.strftime('%d-%m-%Y') }}
+										</h6>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
 
+			<h2>Pending Pickup Orders</h2>
+			<div class="scrollable-container">
+				<div class="scrollable-cards">
+					{% for order in PPO %}
+					<div class="col-mb-5 m-1">
+						<div class="card mb-4 m-1">
+							<div class="card-body p-1">
+								<div class="d-flex align-items-center px-1">
+									<img
+										id="avatar"
+										class="avatar"
+										src="{{ url_for('static', filename='avatars/' + order.user_avatar_url.avatar_url_s) }}"
+										alt="Avatar"
+									/>
+									<div class="d-grid">
+										<h5 class="card-text">{{ order.user.user_name }}</h5>
+										<h6 class="card-date">
+											{{ order.request_time.strftime('%d-%m-%Y') }}
+										</h6>
+									</div>
+								</div>
 
+								<!-- Add more details as needed -->
+							</div>
+						</div>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
 
-<div class="container">
-    <h1>Admin Page</h1>
+			<h2>Pending Delivery Orders</h2>
+			<div class="scrollable-container">
+				<div class="scrollable-cards">
+					{% for order in CO %}
+					<div class="col-mb-5 m-1">
+						<div class="card mb-4 m-1">
+							<div class="card-body p-1">
+								<div class="d-flex align-items-center px-1">
+									<img
+										id="avatar"
+										class="avatar"
+										src="{{ url_for('static', filename='avatars/' + order.user_avatar_url.avatar_url_s) }}"
+										alt="Avatar"
+									/>
+									<div class="d-grid">
+										<h5 class="card-text">{{ order.user.user_name }}</h5>
+										<h6 class="card-date">
+											{{ order.request_time.strftime('%d-%m-%Y') }}
+										</h6>
+									</div>
+								</div>
 
-    <h2>Pending Delivery Orders</h2>
-    <div class="scrollable-card-deck">
-        {% for order in PDO %}
-            <div class="card mb-4 m-1">
-                <div class="card-body p-2">
-                    <h5 class="card-title">{{order.request_time.strftime('%d-%m-%Y') }}</h5>
-                    <h6 class="card-text">Address: {{ order.location }}</h6>
-                    <!-- Add more details as needed -->
-                </div>
-            </div>
-        {% endfor %}
-    </div>
+								<!-- Add more details as needed -->
+							</div>
+						</div>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
 
-    <h2>Pending Pickup Orders</h2>
-    <div class="scrollable-card-deck">
-        {% for order in PPO %}
-            <div class="card mb-4 m-1">
-                <div class="card-body p-2">
-                    <h5 class="card-title">{{order.request_time.strftime('%d-%m-%Y') }}</h5>
-                    <h6 class="card-text">Campus: {{ order.location }}</h6>
-                    <!-- Add more details as needed -->
-                </div>
-            </div>
-        {% endfor %}
-    </div>
-
-    <h2>Completed Orders</h2>
-    <div class="scrollable-card-deck">
-        {% for order in CO %}
-            <div class="card mb-4">
-                <div class="card-body">
-                    <h5 class="card-title">Order ID: {{ order.id }}</h5>
-                    <p class="card-text">Campus: {{ order.location }}</p>
-                    <!-- Add more details as needed -->
-                </div>
-            </div>
-        {% endfor %}
-    </div>
-
+			<!-- Add similar sections for other orders -->
+		</div>
+	</div>
 </div>
+<a
+	tabindex="0"
+	class="btn btn-lg btn-danger"
+	role="button"
+	data-toggle="popover"
+	data-trigger="focus"
+	title="Dismissible popover"
+	data-content="And here's some amazing content. It's very engaging. Right?"
+	>Dismissible popover</a
+>
 
-
-
-<!-- Custom CSS -->
-
-{%endblock%}
+<script>
+	$(document).ready(function () {
+		$('[data-toggle="popover"]').popover();
+	});
+	$('.popover-dismiss').popover({
+		trigger: 'focus',
+	});
+</script>
+{% endblock %}

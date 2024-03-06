@@ -13,3 +13,20 @@ h1 {
     font-size: 30px;
     -webkit-text-stroke: 0.5px gray;
 }
+
+.container {
+    display: flex;
+    width: 80%; /* Set the container to take up 80% of the page */
+    margin: 0 auto; /* Center the container */
+}
+.partial {
+    padding: 10px;
+}
+.info {
+    flex: 1; /* Make _info occupy 10% of the container */
+    background-color: lightblue; /* Example background color */
+}
+.orders {
+    flex: 9; /* Make _orders occupy the remaining space (90%) of the container */
+    background-color: lightgreen; /* Example background color */
+}

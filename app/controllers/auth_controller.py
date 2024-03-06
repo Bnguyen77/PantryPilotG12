@@ -3,9 +3,12 @@ from ..models.user import User, db
 from ..models.order import Order
 from ..ults.forms import LoginForm, RegisterForm
 from ..ults._emailAPI import register_email
+
+
 # from app import app
 
 auth_controller = Blueprint("auth_controller", __name__)
+
 
 @auth_controller.route("/register", methods=["POST"])
 def Register():
@@ -25,17 +28,18 @@ def Register():
             db.session.commit()
 
             try:
-                register_email(new_user.email, new_user.name, new_user.user_name)
+                register_email(new_user.email, new_user.name,
+                               new_user.user_name)
             except Exception as e:
                 # app.logger.error(f"Error sending confirmation email: {e}")
                 flash("Error sending confirmation email. Please try again.", "danger")
 
-            flash(f"Registration successful...please log in!: {new_user.user_name}", "success")
+            flash(
+                f"Registration successful...please log in!: {new_user.user_name}", "success")
             return redirect(url_for('views.login'))
- 
- 
-       
-@auth_controller.route("/login", methods=["POST"])      
+
+
+@auth_controller.route("/login", methods=["POST"])
 def Login():
     form = LoginForm(request.form)  # retrive form info from login page
     # if the user press login and the form is filled correcly
@@ -60,4 +64,12 @@ def Login():
         else:
             flash('Invalid username or password. Please try again.', 'error')
             return redirect(url_for('views.login'))
-    
+
+
+@auth_controller.route('/generate_avatar/<int:user_id>')
+def generate_avatar(user_id):
+    if 'user_id' in session and user_id == session.get('user_id'):
+        user = User.query.get(user_id)  
+        if user:
+            user.generate_avatar()
+    return redirect(url_for('views.user'))

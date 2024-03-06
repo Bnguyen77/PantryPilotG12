@@ -12,14 +12,39 @@
 						<!-- Profile photo column -->
 						<div class="col-auto">
 							<div class="profile-photo">
-                                <a href="#" class="edit-profile-icon"data-bs-toggle="modal" data-bs-target="#editBioModal"><img src="/static/logos/edit-icon.svg" alt="edit-logo"></a>
+								{% if user.avatar %}
+								<img
+									id="avatar"
+									src="{{ url_for('static', filename='avatars/' + user.avatar.avatar_url_l) }}"
+									alt="Avatar"
+								/>
+								{% else %}
+								<div
+									style="background: url({{ url_for('static', filename='logo.jpg') }}) center center/cover; width: 100%; height: 100%; border-radius: 50%"
+								></div>
+								{% endif %}
+								<a
+									href="#"
+									class="edit-profile-icon"
+									data-bs-toggle="modal"
+									data-bs-target="#editBioModal"
+									><img src="/static/logos/edit-icon.svg" alt="edit-logo"
+								/></a>
+								<a
+									id="avatar-change"
+									href="{{ url_for('auth_controller.generate_avatar', user_id = user.id) }}"
+									><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-clockwise" viewBox="0 0 16 16" stroke-width="3">
+										<path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2z"/>
+										<path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466"/>
+									  </svg>
+								</a>
 							</div>
 						</div>
 						<!-- User information column -->
 						<div class="col">
 							<h2 class="card-title">{{ user.name }} - UIC</h2>
 							<h4 class="card-text">{{ user.email }}</h4>
-                            <h5 class="bio">Bio: {{user.bio}}</h5>
+							<h5 class="bio">Bio: {{user.bio}}</h5>
 							<!-- Add more user information fields as needed -->
 						</div>
 					</div>
@@ -30,58 +55,92 @@
 </div>
 
 <!-- Edit Bio Modal -->
-<div class="modal fade" id="editBioModal" tabindex="-1" aria-labelledby="editBioModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editBioModalLabel">Edit Bio</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
+<div
+	class="modal fade"
+	id="editBioModal"
+	tabindex="-1"
+	aria-labelledby="editBioModalLabel"
+	aria-hidden="true"
+>
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="editBioModalLabel">Edit Bio</h5>
+				<button
+					type="button"
+					class="btn-close"
+					data-bs-dismiss="modal"
+					aria-label="Close"
+				></button>
+			</div>
+			<div class="modal-body">
+				<form
+					id="editBioForm"
+					method="POST"
+					action="{{ url_for('user_controller.user_edit') }}"
+				>
+					<div class="mb-3">
+						<label for="userNameInput" class="form-label"
+							>User Name - (need work- authenticate for existing
+							user_name)</label
+						>
+						<input
+							type="text"
+							class="form-control"
+							id="userNameInput"
+							disabled
+							value="{{ user.user_name }}"
+						/>
 
-                <form id="editBioForm" method="POST" action="{{ url_for('user_controller.user_edit') }}">
-                    <div class="mb-3">
-                        <label for="userNameInput" class="form-label">User Name - (need work- authenticate for existing user_name)</label>
-                        <input type="text" class="form-control" id="userNameInput" disabled value="{{ user.user_name }}">
-
-                        <label for="bioInput" class="form-label">Bio</label>
-                        <input type="text" class="form-control" id="bioInput" name="bio" placeholder="Enter your bio">
-                        <div id="bioInputError" class="invalid-feedback">Bio cannot be empty</div>
-
-                    </div>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
-                </form>
-
-            </div>
-        </div>
-    </div>
+						<label for="bioInput" class="form-label">Bio</label>
+						<input
+							type="text"
+							class="form-control"
+							id="bioInput"
+							name="bio"
+							placeholder="Enter your bio"
+						/>
+						<div id="bioInputError" class="invalid-feedback">
+							Bio cannot be empty
+						</div>
+					</div>
+					<button type="submit" class="btn btn-primary">Save changes</button>
+				</form>
+			</div>
+		</div>
+	</div>
 </div>
-
-
-
 
 <script src="{{ url_for('static', filename='js/user_edit.js') }}"></script>
 
 <!-- Custom CSS -->
 <style>
-	.profile-photo {
+	.profile-photo,
+	#avatar {
 		width: 150px;
 		height: 150px;
 		background-color: #f0f0f0;
 		border-radius: 50%;
-		background: url("{{ url_for('static', filename='logo.jpg') }}") center center/cover;
+
 		margin-right: 20px; /* Space between profile photo and user information */
 	}
 
-    .edit-profile-icon {
-        position: absolute;
-        scale: 1.2;
-        top: 10;
-        right: 10;
-        background-color: #ffffff;
-        border-radius: 50%;
-        padding: 5px;
-    }   
+	.edit-profile-icon {
+		position: absolute;
+		scale: 1.2;
+		top: 10;
+		right: 10;
+		background-color: #ffffff;
+		border-radius: 50%;
+		padding: 5px;
+	}
+
+	#avatar-change{
+		position: absolute;
+		color: black;
+		top: 75%;
+		left:22%;	
+	}
 </style>
 
 {%endblock%}

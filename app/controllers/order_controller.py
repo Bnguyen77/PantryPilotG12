@@ -1,7 +1,6 @@
 from flask import render_template, Blueprint, request, redirect, url_for, session, flash
 from ..models.user import User, db
 from ..models.order import Order
-from ..ults.forms import LoginForm, RegisterForm
 from ..ults._emailAPI import register_email
 # from app import app
 
