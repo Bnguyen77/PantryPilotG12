@@ -52,3 +52,77 @@ Request Time: {formatted}
 From,
 Pantry Pilot Team"""
     server.sendmail(sender_email, receiver_email, message)
+
+def order__accepted_email(receiver_email,username,order):
+    formatted = order.request_time.strftime("%Y-%m-%d %H:%M")
+    message = f"""\
+Subject: Order Accepted
+
+Dear {username},
+
+Your order has been acccepted by the pantry and will be fufilled!
+
+Your order is as follows:
+Order ID: {order.id}
+Preferred Item(s): {order.prefer_item}
+Dietary Restriction(s): {order.dietary_restriction}
+Delivery: {order.delivery}
+Location: {order.location}
+Request Time: {formatted}
+
+
+
+
+From,
+Pantry Pilot Team"""
+    server.sendmail(sender_email, receiver_email, message)
+
+def order_denied_email(receiver_email,username,order):
+    formatted = order.request_time.strftime("%Y-%m-%d %H:%M")
+    message = f"""\
+Subject: Can't Fufill Order
+
+Dear {username},
+
+Pantry workers have indicated that they can not fufil your order right now and thus your order was denied.
+Please try again later or create an order with differnt items.
+
+Your order was as follows:
+Order ID: {order.id}
+Preferred Item(s): {order.prefer_item}
+Dietary Restriction(s): {order.dietary_restriction}
+Delivery: {order.delivery}
+Location: {order.location}
+Request Time: {formatted}
+
+
+
+
+From,
+Pantry Pilot Team"""
+    server.sendmail(sender_email, receiver_email, message)
+
+def order_fufilled_email(receiver_email,username,order):
+    formatted = order.request_time.strftime("%Y-%m-%d %H:%M")
+    message = f"""\
+Subject: Order Fufilled
+
+Dear {username},
+
+Pantry workers have indicated that your order was successfully fufilled!
+We hope you enjoy your items, if there are any issues please contact us at pantrypilotuic@gmail.com
+
+Your order was as follows:
+Order ID: {order.id}
+Preferred Item(s): {order.prefer_item}
+Dietary Restriction(s): {order.dietary_restriction}
+Delivery: {order.delivery}
+Location: {order.location}
+Request Time: {formatted}
+
+
+
+
+From,
+Pantry Pilot Team"""
+    server.sendmail(sender_email, receiver_email, message)
