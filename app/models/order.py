@@ -3,7 +3,7 @@ from datetime import datetime
 
 class Order(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    prefer_item = db.Column(db.String(200), nullable=False, default='none')
+    allergies = db.Column(db.String(200), nullable=False, default='none')
     dietary_restriction = db.Column(db.String(200), nullable=False, default='none')
     status = db.Column(db.String(20), nullable=False, default='pending')
     delivery = db.Column(db.Boolean, nullable=False, default=False)  # True if delivery, False if pickup

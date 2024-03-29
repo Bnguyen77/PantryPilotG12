@@ -1,8 +1,24 @@
-.scrollable-card-deck {
-    display: flex;
+.scrollable-container {
     overflow-x: auto;
+    white-space: nowrap;
+    margin-bottom: 20px;
+}
+
+.scrollable-cards {
+    display: flex;
+    margin-right: 20px;
 }
 
 .card {
-    width: 200px;   
+    transition: transform 0.3s;
+    opacity: 0.9;
+    width: 200px;
+    padding: 5px 7px;
+    margin-right: 5px; /* Adjust the margin as needed */
 }
+
+.card:hover {
+    transform: scale(1.1);
+}
+
+

@@ -1,99 +1,251 @@
-<!-- List of avail orders -->
-<style>
-	/* Custom CSS for horizontal scroll */
-	.scrollable-cards {
-		overflow-x: auto;
-		white-space: nowrap;
-		padding-bottom: 15px; /* to ensure the last card is not partially hidden */
-	}
-
-	/* Optional: Adjust card width */
-	.card {
-		width: 400px; /* Adjust as needed */
-		padding: 20px;
-		display: inline-block;
-		margin-right: 10px; /* Adjust spacing between cards */
-	}
-</style>
-
-
+<link
+	rel="stylesheet"
+	href="{{ url_for('static', filename='css/partials/_orders.css') }}"
+/>
 
 <!-- order_request_form.html -->
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-4">
-            <div class="card mt-3 shadow" style="opacity: 0.8;">
-                <div class="card-body py-2 px-md-1"  >
+<div class="orders-container">
+	<div class="row justify-content-center">
+		<div class="col">
+			<div class="order-box mt-3 shadow" style="opacity: 0.8">
+				<div class="card-body py-2 px-md-1">
 					<h2 class="text-center mb-4">Request Orders</h2>
 
-                    <!-- Order Form -->
-                    <form method="POST" action="{{url_for('order_controller.order_request')}}">
-                        <div class="input-group mb-3">
-                            <div class="input-group-text">
-                                <input class="form-check-input mt-0" type="checkbox" id="enableItems" aria-label="Checkbox for enabling items input" />
-                            </div>
-                            <input type="text" class="form-control" placeholder="No Item Reference" id="items" name="prefer_item" aria-label="Text input for items" disabled />
-                        </div>
+					<!-- Order Form -->
+					<form
+						method="POST"
+						action="{{url_for('order_controller.order_request')}}"
+					>
+						<div class="allergies-container">
+							<h6>Do you have any food allergies?</h6>
+							<ul class="checkboxes">
+								<li>
+									<input type="checkbox" name="allergies" value="nuts" /> Nuts
+								</li>
+								<li>
+									<input type="checkbox" name="allergies" value="milk" /> Milk
+								</li>
+								<li>
+									<input type="checkbox" name="allergies" value="shellfish" />
+									Shellfish
+								</li>
+								<li>
+									<input type="checkbox" name="allergies" value="soy" /> Soy
+								</li>
+								<li>
+									<input type="checkbox" name="allergies" value="eggs" /> Eggs
+								</li>
+								<li>
+									<input type="checkbox" name="allergies" value="wheat" /> Wheat
+								</li>
+								<li>
+									<input type="checkbox" name="allergies" value="none" /> None
+								</li>
+							</ul>
+						</div>
 
-                        <div class="input-group mb-3">
-                            <div class="input-group-text">
-                                <input class="form-check-input mt-0" type="checkbox" id="enableRestrictions"  aria-label="Checkbox for enabling restrictions input" />
-                            </div>
-                            <input type="text" class="form-control" placeholder="No Dietary Restriction" id="restriction" name="dietary_restriction" aria-label="Text input for dietary restrictions" disabled />
-                        </div>
+						<div class="restrictions-container">
+							<h6>Do you have any dietary restrictions?</h6>
+							<ul class="checkboxes">
+								<li>
+									<input
+										type="checkbox"
+										name="dietary_restriction"
+										value="vegetarian"
+									/>
+									Vegetarian
+								</li>
+								<li>
+									<input
+										type="checkbox"
+										name="dietary_restriction"
+										value="vegan"
+									/>
+									Vegan
+								</li>
+								<li>
+									<input
+										type="checkbox"
+										name="dietary_restriction"
+										value="gluten-free"
+									/>
+									Gluten-Free
+								</li>
+								<li>
+									<input
+										type="checkbox"
+										name="dietary_restriction"
+										value="lactose-free"
+									/>
+									Lactose-Free
+								</li>
+								<li>
+									<input
+										type="checkbox"
+										name="dietary_restriction"
+										value="halal"
+									/>
+									Halal
+								</li>
+								<li>
+									<input
+										type="checkbox"
+										name="dietary_restriction"
+										value="kosher"
+									/>
+									Kosher
+								</li>
+								<li>
+									<input
+										type="checkbox"
+										name="dietary_restriction"
+										value="none"
+									/>
+									None
+								</li>
+							</ul>
+						</div>
 
-                        <div class="input-group mb-3">
-                            <div class="input-group-text">
-                                <input class="form-check-input mt-0" type="checkbox" id="enableLocation" aria-label="Checkbox for enabling location input" />
-                            </div>
-                            <input type="text" class="form-control" placeholder="pick up: UIC Student Center" id="location" name="location" aria-label="Text input for location" disabled />
-                        </div>
+						<div>
+							<h6>How do you want to receive your order?</h6>
+						</div>
+						<div class="order-type-buttons" data-toggle="buttons">
+							<label class="btn btn-secondary col-md-5">
+								<input
+									type="radio"
+									name="options"
+									id="pickup"
+									autocomplete="off"
+									checked
+								/>
+								Pickup
+							</label>
+							<label class="btn btn-secondary col-md-5">
+								<input
+									type="radio"
+									name="options"
+									id="deliver"
+									autocomplete="off"
+								/>
+								Deliver
+							</label>
+						</div>
 
-						<button type="submit" class="btn btn-primary btn-block mx-3 col-md-5">Submit Request</button>
-                        <button type="button" class="btn btn-secondary btn-block  col-md-5" data-bs-toggle="modal" data-bs-target="#orderHistoryModal">Order History</button>
+						<div id="delivery-address" style="display: none">
+							<input
+								type="text"
+								class="form-control"
+								id="addressInput"
+								placeholder="Enter delivery address"
+							/>
+						</div>
 
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+						<button
+							type="submit"
+							class="btn btn-primary btn-block mx-3 col-md-5"
+						>
+							Submit Request
+						</button>
+						<button
+							type="button"
+							class="btn btn-secondary btn-block col-md-5"
+							data-bs-toggle="modal"
+							data-bs-target="#orderHistoryModal"
+						>
+							Order History
+						</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
+
+
 <!-- order_request_form.html -->
 
-
-<div class="modal fade" id="orderHistoryModal" tabindex="-1" aria-labelledby="orderHistoryModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="orderHistoryModalLabel">Order History</h5>
+<div
+	class="modal fade"
+	id="orderHistoryModal"
+	tabindex="-1"
+	aria-labelledby="orderHistoryModalLabel"
+	aria-hidden="true"
+>
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="orderHistoryModalLabel">Order History</h5>
 				<div class="d-flex justify-content-end">
-                    <div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
+					<div
+						class="btn-group btn-group-sm"
+						role="group"
+						aria-label="Small button group"
+					>
 						<!-- <h5 class="m-2"> status:</h5> -->
-                        <button type="button" id="deliveryBtn" class="btn btn-outline-primary">delivery</button>
-                        <button type="button" id="pickupBtn" class="btn btn-outline-primary">pickup</button>
-                        <button type="button" id="completeBtn" class="btn btn-outline-success">complete</button>
-                    </div>
-                </div>          
+						<button
+							type="button"
+							id="deliveryBtn"
+							class="btn btn-outline-primary"
+						>
+							delivery
+						</button>
+						<button
+							type="button"
+							id="pickupBtn"
+							class="btn btn-outline-primary"
+						>
+							pickup
+						</button>
+						<button
+							type="button"
+							id="completeBtn"
+							class="btn btn-outline-success"
+						>
+							complete
+						</button>
+					</div>
+				</div>
 			</div>
-            <div class="modal-body">
-                <!-- This content will be displayed in the modal -->
-				<div class="list-group" id="orderList" style="max-height: 400px; overflow-y: auto; padding: 5px">
+			<div class="modal-body">
+				<!-- This content will be displayed in the modal -->
+				<div
+					class="list-group"
+					id="orderList"
+					style="max-height: 400px; overflow-y: auto; padding: 5px"
+				>
 					{% for order in orders_by_user_id %}
-						<a href="#" data-order-id="{{ order.id }}"
+					<a
+						href="#"
+						data-order-id="{{ order.id }}"
 						data-delivery="{{ order.delivery }}"
-						data-status="{{ order.status }}" class="list-group-item list-group-item-action my-1">{{ order.request_time.strftime('%d-%m-%Y') }} 
-					 -  {{ order.location }}
+						data-status="{{ order.status }}"
+						class="list-group-item list-group-item-action my-1"
+						>{{ order.request_time.strftime('%d-%m-%Y') }} - {{ order.location
+						}} {{order.status }}
 					</a>
 					{% endfor %}
-				  </div>
-
-
-            </div>
-        </div>
-    </div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 <script src="{{ url_for('static', filename='js/order_request.js') }}"></script>
 <script src="{{ url_for('static', filename='js/order_history.js') }}"></script>
+<script>
+	const deliverButton = document.getElementById('deliver');
+	const deliveryAddress = document.getElementById('delivery-address');
 
-	
+	deliverButton.addEventListener('change', function () {
+		if (this.checked) {
+			deliveryAddress.style.display = 'block';
+		} else {
+			deliveryAddress.style.display = 'none';
+		}
+	});
+
+	// Initially check if "Deliver" option is selected, then display address input
+	if (deliverButton.checked) {
+		deliveryAddress.style.display = 'block';
+	}
+</script>

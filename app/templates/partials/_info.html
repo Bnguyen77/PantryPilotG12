@@ -1,0 +1,25 @@
+<link
+	rel="stylesheet"
+	href="{{ url_for('static', filename='css/partials/_info.css') }}"
+/>
+
+<div class="info-container">
+	<div class="profile">
+		{% if user.avatar %}
+		<img
+			id="avatar"
+			src="{{ url_for('static', filename='avatars/' + user.avatar.avatar_url_l) }}"
+			alt="Avatar"
+		/>
+		{% else %}
+		<div
+			style="background: url({{ url_for('static', filename='logo.jpg') }}) center center/cover;"
+		></div>
+		{% endif %}
+	</div>
+	<div class="user-info">
+		<h2>{{ user.user_name }}</h2>
+		<p>Email: {{ user.email }}</p>
+		<!-- Add more user information here -->
+	</div>
+</div>

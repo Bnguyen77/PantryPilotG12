@@ -1,0 +1,29 @@
+
+.info-container {
+    border: 2px solid black;
+    flex: 1; /* Make _info occupy 10% of the container */
+    background-color: lightblue; /* Example background color */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.profile {
+    border: 2px solid black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 60px  20px;
+}
+
+.user-info {
+    border: 2px solid black;
+    text-align: center;
+    margin: 20px  ;
+
+}
+#avatar {
+    border: 2px solid black;
+    scale: 1.2;
+    border-radius: 50%;
+    margin: 15px 10px;
+}

@@ -1,0 +1,26 @@
+
+.orders-container {
+	border: 2px solid blue;
+	width: 40%;
+	padding: 0;
+	/* Make _orders occupy the remaining space (90%) of the container */
+	background-color: lightgreen; /* Example background color */
+	display: inline-block;
+}
+
+.order-box {
+	display: inline-block;
+	width: 100%;
+	margin: 0;
+	border: 2px solid red;
+}
+
+ul{
+	list-style-type: none;
+}
+
+.order-type-buttons {
+	border: 2px solid black;
+	padding: 10px;
+	margin: 10px;
+}   

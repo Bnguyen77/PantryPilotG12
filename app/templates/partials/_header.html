@@ -17,6 +17,7 @@
 			<span class="navbar-toggler-icon"></span>
 		</button>
 		<div
+		style = "width: 250px;"
 			class="offcanvas offcanvas-end text-bg-dark"
 			tabindex="-1"
 			id="offcanvasDarkNavbar"
@@ -24,12 +25,8 @@
 		>
 			<div class="offcanvas-header">
 				{% if 'user_id' in session %}
-				<!-- User is in session -->
-				<h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">
-					Welcome, {{ session['user_name'] }}!
-				</h5>
 				<a
-					class="btn btn-outline-danger mx-4"
+					class="btn btn-outline-danger mx-2"
 					style="position: relative; margin: 0"
 					href="{{ url_for('views.logout') }}"
 					>Logout</a
@@ -45,17 +42,9 @@
 				/></a>
 				<!-- <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button> -->
 			</div>
-			<div class="offcanvas-body">
+			<div class="offcanvas-body" >
 				<ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-					<form class="d-flex mt-3" role="search">
-						<input
-							class="form-control me-2"
-							type="search"
-							placeholder="Search..."
-							aria-label="Search"
-						/>
-						<button class="btn btn-success" type="submit">Enter</button>
-					</form>
+					
 					<li class="nav-item">
 						<a
 							class="nav-link active"
