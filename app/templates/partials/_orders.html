@@ -4,75 +4,139 @@
 />
 
 <!-- order_request_form.html -->
-<div class="container">
+<div class="orders-container">
 	<div class="row justify-content-center">
-		<div class="col-md-">
-            
-			<div class="card mt-3 shadow" id="order-box" style="opacity: 0.8">
+		<div class="col">
+			<div class="order-box mt-3 shadow" style="opacity: 0.8">
 				<div class="card-body py-2 px-md-1">
 					<h2 class="text-center mb-4">Request Orders</h2>
+
 					<!-- Order Form -->
 					<form
 						method="POST"
 						action="{{url_for('order_controller.order_request')}}"
 					>
-						<div class="input-group mb-3">
-							<div class="input-group-text">
-								<input
-									class="form-check-input mt-0"
-									type="checkbox"
-									id="enableItems"
-									aria-label="Checkbox for enabling items input"
-								/>
-							</div>
-							<input
-								type="text"
-								class="form-control"
-								placeholder="No Item Reference"
-								id="items"
-								name="prefer_item"
-								aria-label="Text input for items"
-								disabled
-							/>
+						<div class="allergies-container">
+							<h6>Do you have any food allergies?</h6>
+							<ul class="checkboxes">
+								<li>
+									<input type="checkbox" name="allergies" value="nuts" /> Nuts
+								</li>
+								<li>
+									<input type="checkbox" name="allergies" value="milk" /> Milk
+								</li>
+								<li>
+									<input type="checkbox" name="allergies" value="shellfish" />
+									Shellfish
+								</li>
+								<li>
+									<input type="checkbox" name="allergies" value="soy" /> Soy
+								</li>
+								<li>
+									<input type="checkbox" name="allergies" value="eggs" /> Eggs
+								</li>
+								<li>
+									<input type="checkbox" name="allergies" value="wheat" /> Wheat
+								</li>
+								<li>
+									<input type="checkbox" name="allergies" value="none" /> None
+								</li>
+							</ul>
 						</div>
 
-						<div class="input-group mb-3">
-							<div class="input-group-text">
-								<input
-									class="form-check-input mt-0"
-									type="checkbox"
-									id="enableRestrictions"
-									aria-label="Checkbox for enabling restrictions input"
-								/>
-							</div>
-							<input
-								type="text"
-								class="form-control"
-								placeholder="No Dietary Restriction"
-								id="restriction"
-								name="dietary_restriction"
-								aria-label="Text input for dietary restrictions"
-								disabled
-							/>
+						<div class="restrictions-container">
+							<h6>Do you have any dietary restrictions?</h6>
+							<ul class="checkboxes">
+								<li>
+									<input
+										type="checkbox"
+										name="dietary_restriction"
+										value="vegetarian"
+									/>
+									Vegetarian
+								</li>
+								<li>
+									<input
+										type="checkbox"
+										name="dietary_restriction"
+										value="vegan"
+									/>
+									Vegan
+								</li>
+								<li>
+									<input
+										type="checkbox"
+										name="dietary_restriction"
+										value="gluten-free"
+									/>
+									Gluten-Free
+								</li>
+								<li>
+									<input
+										type="checkbox"
+										name="dietary_restriction"
+										value="lactose-free"
+									/>
+									Lactose-Free
+								</li>
+								<li>
+									<input
+										type="checkbox"
+										name="dietary_restriction"
+										value="halal"
+									/>
+									Halal
+								</li>
+								<li>
+									<input
+										type="checkbox"
+										name="dietary_restriction"
+										value="kosher"
+									/>
+									Kosher
+								</li>
+								<li>
+									<input
+										type="checkbox"
+										name="dietary_restriction"
+										value="none"
+									/>
+									None
+								</li>
+							</ul>
 						</div>
 
-						<div class="input-group mb-3">
-							<div class="input-group-text">
+						<div>
+							<h6>How do you want to receive your order?</h6>
+						</div>
+						<div class="order-type-buttons" data-toggle="buttons">
+							<label class="btn btn-secondary col-md-5">
 								<input
-									class="form-check-input mt-0"
-									type="checkbox"
-									id="enableLocation"
-									aria-label="Checkbox for enabling location input"
+									type="radio"
+									name="options"
+									id="pickup"
+									autocomplete="off"
+									checked
 								/>
-							</div>
+								Pickup
+							</label>
+							<label class="btn btn-secondary col-md-5">
+								<input
+									type="radio"
+									name="options"
+									id="deliver"
+									autocomplete="off"
+								/>
+								Deliver
+							</label>
+						</div>
+
+						<div id="delivery-address" style="display: none">
 							<input
 								type="text"
 								class="form-control"
-								placeholder="pick up: UIC Student Center"
-								id="location"
-								name="location"
-								aria-label="Text input for location"
-								disabled
+								id="addressInput"
+								placeholder="Enter delivery address"
 							/>
 						</div>
 
@@ -96,6 +160,8 @@
 		</div>
 	</div>
 </div>
+
+
 <!-- order_request_form.html -->
 
 <div
@@ -155,7 +221,7 @@
 						data-status="{{ order.status }}"
 						class="list-group-item list-group-item-action my-1"
 						>{{ order.request_time.strftime('%d-%m-%Y') }} - {{ order.location
-						}}
+						}} {{order.status }}
 					</a>
 					{% endfor %}
 				</div>
@@ -166,3 +232,20 @@
 
 <script src="{{ url_for('static', filename='js/order_request.js') }}"></script>
 <script src="{{ url_for('static', filename='js/order_history.js') }}"></script>
+<script>
+	const deliverButton = document.getElementById('deliver');
+	const deliveryAddress = document.getElementById('delivery-address');
+
+	deliverButton.addEventListener('change', function () {
+		if (this.checked) {
+			deliveryAddress.style.display = 'block';
+		} else {
+			deliveryAddress.style.display = 'none';
+		}
+	});
+
+	// Initially check if "Deliver" option is selected, then display address input
+	if (deliverButton.checked) {
+		deliveryAddress.style.display = 'block';
+	}
+</script>

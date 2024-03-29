@@ -13,6 +13,7 @@ def init_app(app):
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///local.db'
     # Ensure that templates are auto-reloaded during development
     app.config['TEMPLATES_AUTO_RELOAD'] = True
+    
     from .user import User
     from .order import Order
     # Initialize the SQLAlchemy database

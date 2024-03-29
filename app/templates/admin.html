@@ -7,20 +7,11 @@
 <div class="container" style="width: 80%; background-color: white">
 	<div class="row justify-content-center">
 		<!-- Info box on the left -->
-		<div class="col-md-3">{% include "partials/_info.html" %}</div>
+		{% include "partials/_info.html" %}
 
 		<!-- Container on the right -->
 		<div class="col-md-8" id="order-lists">
 			<h2>Pending Delivery Orders</h2>
-			<button
-				type="button"
-				class="btn btn-lg btn-danger"
-				data-toggle="popover"
-				title="Popover title"
-				data-content="And here's some amazing content. It's very engaging. Right?"
-			>
-				Click to toggle popover
-			</button>
 
 			<div class="scrollable-container">
 				<div class="scrollable-cards">
@@ -53,7 +44,13 @@
 			<div class="scrollable-container">
 				<div class="scrollable-cards">
 					{% for order in PPO %}
-					<div class="col-mb-5 m-1">
+					<div
+						class="col-mb-5 m-1"
+						data-order-id="{{ order.id }}"
+						type="button"
+						data-toggle="modal"
+						data-target="#orderDetailsModal{{ order.id }}"
+					>
 						<div class="card mb-4 m-1">
 							<div class="card-body p-1">
 								<div class="d-flex align-items-center px-1">
@@ -75,15 +72,21 @@
 							</div>
 						</div>
 					</div>
-					{% endfor %}
+
+					{% include "partials/_order_detail_modal.html" %} {%endfor %}
 				</div>
 			</div>
 
-			<h2>Pending Delivery Orders</h2>
+			<h2>Confirmed Orders</h2>
 			<div class="scrollable-container">
 				<div class="scrollable-cards">
 					{% for order in CO %}
-					<div class="col-mb-5 m-1">
+					<div
+						class="col-mb-5 m-1"
+						type="button"
+						data-toggle="modal"
+						data-target="#orderDetailsModal"
+					>
 						<div class="card mb-4 m-1">
 							<div class="card-body p-1">
 								<div class="d-flex align-items-center px-1">
@@ -113,16 +116,6 @@
 		</div>
 	</div>
 </div>
-<a
-	tabindex="0"
-	class="btn btn-lg btn-danger"
-	role="button"
-	data-toggle="popover"
-	data-trigger="focus"
-	title="Dismissible popover"
-	data-content="And here's some amazing content. It's very engaging. Right?"
-	>Dismissible popover</a
->
 
 <script>
 	$(document).ready(function () {
@@ -132,4 +125,5 @@
 		trigger: 'focus',
 	});
 </script>
+
 {% endblock %}

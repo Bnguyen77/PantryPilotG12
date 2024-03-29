@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		// Show all orders
 		const orders = orderList.querySelectorAll('.list-group-item');
 		orders.forEach((order) => {
-			if (order.dataset.delivery === 'True') {
+			if (order.dataset.delivery === 'True' && order.dataset.status === 'pending') {
 				order.style.display = 'block';
 			} else {
 				order.style.display = 'none';
@@ -57,13 +57,27 @@ document.addEventListener('DOMContentLoaded', function () {
 		// Show all orders
 		const orders = orderList.querySelectorAll('.list-group-item');
 		orders.forEach((order) => {
-			if (order.dataset.delivery === 'False') {
+			if (order.dataset.delivery === 'False' && order.dataset.status === 'pending') {
 				order.style.display = 'block';
 			} else {
 				order.style.display = 'none';
 			}
 		});
 	});
+
+
+	completeBtn.addEventListener('click', function () {
+		// Show all orders
+		const orders = orderList.querySelectorAll('.list-group-item');
+		orders.forEach((order) => {
+			if (order.dataset.status === 'completed') {
+				order.style.display = 'block';
+			} else {
+				order.style.display = 'none';
+			}
+		});
+	});
+
 
 	//reseting display when modal is closed
 	$('#orderHistoryModal').on('shown.bs.modal', function () {

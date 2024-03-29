@@ -1,19 +1,26 @@
-	/* Custom CSS for horizontal scroll */
-	.scrollable-cards {
-		overflow-x: auto;
-		white-space: nowrap;
-		padding-bottom: 15px; /* to ensure the last card is not partially hidden */
-	}
 
-	/* Optional: Adjust card width */
-	.card {
-		width: 400px; /* Adjust as needed */
-		/* padding: 20px; */
-		display: inline-block;
-		margin-right: 10px; /* Adjust spacing between cards */
-	}
+.orders-container {
+	border: 2px solid blue;
+	width: 40%;
+	padding: 0;
+	/* Make _orders occupy the remaining space (90%) of the container */
+	background-color: lightgreen; /* Example background color */
+	display: inline-block;
+}
 
-	#order-box {
-		width: 700px;
-		height: 100%;
-	}
+.order-box {
+	display: inline-block;
+	width: 100%;
+	margin: 0;
+	border: 2px solid red;
+}
+
+ul{
+	list-style-type: none;
+}
+
+.order-type-buttons {
+	border: 2px solid black;
+	padding: 10px;
+	margin: 10px;
+}   

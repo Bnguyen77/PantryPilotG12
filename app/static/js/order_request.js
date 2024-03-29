@@ -9,6 +9,9 @@ const itemsInput = document.getElementById('items');
 const restrictionInput = document.getElementById('restriction');
 const locationInput = document.getElementById('location');
 
+const deliverButton = document.getElementById('deliver');
+const deliveryAddress = document.getElementById('delivery-address');
+
 function updateInputValue(
 	checkbox,
 	inputField,
@@ -53,6 +56,19 @@ enableLocationCheckbox.addEventListener('change', function () {
 });
 
 //END ORDER REQUEST FORM
+
+
+
+deliverButton.addEventListener('change', function() {
+	if (this.checked) {
+		deliveryAddress.style.display = 'block';
+	} else {
+		deliveryAddress.style.display = 'none';
+	}
+});
+if (deliverButton.checked) {
+	deliveryAddress.style.display = 'block';
+}
 
 
 

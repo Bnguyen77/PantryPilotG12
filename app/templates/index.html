@@ -9,10 +9,15 @@
 <div class="username">
 	<h2>Welcome, {{ session['user_name'], session['role'] }}!</h2>
 </div>
+
 <!-- Add other content or actions for authenticated users -->
-<div class="container">
-	<div class="partial info">{% include "partials/_info.html" %}</div>
-	<div class="partial orders">{% include "partials/_orders.html" %}</div>
+<div class="main-container">
+	{% include "partials/_info.html" %}
+	<div class="right-container">
+		{% include "partials/_orders.html" %}
+		{% include "partials/_orders_history.html" %}
+		
+	</div>
 </div>
 {%else %}
 <!-- User is not in session -->
