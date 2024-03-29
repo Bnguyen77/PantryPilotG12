@@ -2,6 +2,7 @@ import smtplib
 import ssl
 from datetime import datetime
 
+
 port = 465  # For SSL
 smtp_server = "smtp.gmail.com"
 sender_email = "pantrypilotuic@gmail.com"
@@ -11,6 +12,7 @@ server=smtplib.SMTP_SSL(smtp_server, port, context=context)
 server.login(sender_email, password)
 
 def register_email(receiver_email,name,username):
+
     message = f"""\
 Subject: Welcome to Pantry Pilot!
 

@@ -13,3 +13,16 @@ h1 {
     font-size: 30px;
     -webkit-text-stroke: 0.5px gray;
 }
+
+.main-container {
+    display: flex;
+    width: 70%; /* Set the container to take up 80% of the page */
+    margin: 0 auto; /* Center the container */
+}
+
+.right-container{
+    background-color: antiquewhite;
+    width: 80%;
+}
+
+
