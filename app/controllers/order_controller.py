@@ -1,8 +1,10 @@
 from flask import render_template, Blueprint, request, redirect, url_for, session, flash
 from ..models.user import User, db
 from ..models.order import Order
-from ..ults._emailAPI import register_email
+
+from ..ults._emailAPI import register_email, order_email
 from datetime import datetime
+from ..ults.forms import LoginForm, RegisterForm
 
 # from app import app
 
@@ -36,6 +38,14 @@ def order_request():
 
     db.session.add(new_order)
     db.session.commit()
+    
+    try:
+        order_email(session.get('email'), session.get('user_name'), new_order)
+    except Exception as e:
+        # app.logger.error(f"Error sending confirmation email: {e}")
+        flash("Error sending confirmation email. Please try again.", "danger")
+
+    return redirect(url_for('views.index'))
 
     return redirect(url_for('views.index'))
 
@@ -56,3 +66,4 @@ def confirm_order(order_id):
     return redirect(url_for('views.index'))
 
         
+
