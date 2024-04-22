@@ -1,0 +1,170 @@
+.hero-content{
+    width: 100%;
+    height: 600px;
+    overflow: hidden;
+    background-color: rgba(215, 250, 217, 0.418);    
+}
+body{
+    background-image: none;
+}
+
+#hero-img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.90;   
+}
+
+.text-overlay {
+    position: absolute; /* Position the text absolutely within the outer div */
+     /* Position the text horizontally centered */
+    transform: translate(-50%, -50%); /* Center the text precisely */
+    color: rgba(236, 235, 233, 0.897); /* Set the text color */
+    font-size: 100px; /* Set the font size */
+    font-weight: bold; /* Set the font weight to bold */
+    text-align: center; /* Center-align the text */ 
+    text-shadow: 5px 5px 20px rgba(129, 129, 129, 0.822);
+    opacity: 0; /* Set initial opacity to 0 */
+    animation-fill-mode: forwards;
+}
+.line1{
+    top: 25%; /* Position the text vertically centered */
+    left: 20%;
+    animation: fadeIn 1s forwards; 
+}
+.line2{
+    font-size: 80px;
+    top: 40%; /* Position the text vertically centered */
+    left: 25%;
+    animation: fadeIn 1s 1.5s forwards; 
+}
+.line3{
+    color: rgba(248, 136, 136, 0.897); 
+    top: 52%; /* Position the text vertically centered */
+    left: 35%;
+    animation: fadeIn 1s 2s forwards;
+}
+
+.line4{
+    font-size: 60px;
+    top: 70%; /* Position the text vertically centered */
+    left: 55%;
+    animation: fadeIn 1s 3s forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0; /* Start with opacity 0 */
+    }
+    to {
+        opacity: 1; /* End with opacity 1 */
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1; /* Start with opacity 1 */
+    }
+    to {
+        opacity: 0; /* End with opacity 0 */
+    }
+}
+
+.missions-content{
+    width: 100%;
+    height: 1600px;
+    background: linear-gradient(to top, rgba(235, 204, 103, 0), #000000f8);
+}
+
+.missions-body{
+    margin: auto;
+    width: 80%;
+    height: 100%;
+}
+
+.right{
+    position: relative;
+    float: right;
+    width: 30%;
+    height: 100%;
+    /* border: 1px solid black; */
+}
+.left{
+    position: relative;
+    float: left;
+    height: 100%;
+    width: 60%;
+
+}
+
+#mission-img{
+    border-radius: 10px;
+    position: absolute;
+    opacity: 0.5;
+    top: 25%;
+    right: 30%;
+    width: 400px;
+    height: 600px;
+    object-fit: cover;
+    object-position: center;   
+    border: 2px solid rgba(245, 222, 179, 0.459);
+}
+
+.text-m{
+    position: absolute; /* Position the text absolutely within the outer div */
+    transform: translate(-50%, -50%); /* Center the text precisely */
+    color: rgba(236, 235, 233, 0.897); /* Set the text color */
+    font-size: 100px; /* Set the font size */
+    font-weight: bold; /* Set the font weight to bold */
+    text-align: center; /* Center-align the text */ 
+    text-shadow: 5px 5px 20px rgba(129, 129, 129, 0.822);
+}
+
+.l1 {
+    top: 22%;
+    font-size: 50px;
+}
+
+.l2{
+    top: 25%;
+    left: 50%;
+    color: #c5c5c5;
+    word-spacing: 10px;
+    font-weight: 550;
+    font-size: 20px;
+    width: 450px;
+}
+.l3{
+    top: 47%;
+    left: 35%;
+    font-size: 50px;
+}
+.l4{
+    position: relative;
+    top: 55%;
+    right: 50%;
+    font-size: 70px;
+    scale: 1.2;
+    text-shadow: 42px 58px 10px 25px rgba(0, 0, 0, 0.9);
+}
+
+.parallax-text {
+    text-align: center;
+    font-size: 150px;
+
+}
+.parallax{
+    opacity: 0.9;
+   background: url("../img/bg2.jpg") repeat fixed 50% ; 
+}
+
+.parallax-inner {
+    padding-top: 15%;
+    padding-bottom: 15%;
+}
+
+.campus-content {
+    height: 500px;
+    width: 100%;
+    background: linear-gradient(to bottom, rgba(141, 141, 141, 0.219), #f2ffc14d);
+}

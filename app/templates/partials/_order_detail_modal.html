@@ -23,19 +23,24 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<p>Allergies : {{ order.allergies }}</p>
-				<p>Dietary Restriction : {{ order.dietary_restriction }}</p>
+				<p><strong>Allergies</strong> : {{ order.allergies }}</p>
+				<p><strong>Dietary Restriction</strong> : {{ order.dietary_restriction }}</p>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">
-					Close
-				</button>
+				
 				<form
 					id="confirmOrderForm"
 					action="{{ url_for('order_controller.confirm_order', order_id=order.id) }}"
 					method="POST"
 				>
-					<button type="submit">Confirm Order</button>
+					<button class="btn btn-primary" type="submit">Confirm Order</button>
+				</form>
+				<form
+					id="confirmOrderForm"
+					action="{{ url_for('order_controller.deny_order', order_id=order.id) }}"
+					method="POST"
+				>
+					<button class="btn btn-danger" type="submit">Deny Order</button>
 				</form>
 			</div>
 		</div>

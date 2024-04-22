@@ -9,16 +9,16 @@
 		<div class="col">
 			<div class="order-box mt-3 shadow" style="opacity: 0.8">
 				<div class="card-body py-2 px-md-1">
-					<h2 class="text-center mb-4">Request Orders</h2>
+					<h2 class="text-center mb-4 ">Request Orders</h2>
 
 					<!-- Order Form -->
 					<form
 						method="POST"
 						action="{{url_for('order_controller.order_request')}}"
 					>
-						<div class="allergies-container">
+						<div class="allergies-container ">
 							<h6>Do you have any food allergies?</h6>
-							<ul class="checkboxes">
+							<ul class="checkboxes ">
 								<li>
 									<input type="checkbox" name="allergies" value="nuts" /> Nuts
 								</li>
@@ -38,9 +38,7 @@
 								<li>
 									<input type="checkbox" name="allergies" value="wheat" /> Wheat
 								</li>
-								<li>
-									<input type="checkbox" name="allergies" value="none" /> None
-								</li>
+								
 							</ul>
 						</div>
 
@@ -95,64 +93,33 @@
 									/>
 									Kosher
 								</li>
-								<li>
-									<input
-										type="checkbox"
-										name="dietary_restriction"
-										value="none"
-									/>
-									None
-								</li>
+								
 							</ul>
 						</div>
 
 						<div>
 							<h6>How do you want to receive your order?</h6>
 						</div>
-						<div class="order-type-buttons" data-toggle="buttons">
-							<label class="btn btn-secondary col-md-5">
-								<input
-									type="radio"
-									name="options"
-									id="pickup"
-									autocomplete="off"
-									checked
-								/>
-								Pickup
+						
+						<div class="order-type-buttons btn-group btn-group-toggle" style="display:block" data-toggle="buttons">
+							<label class="btn btn-secondary active" for="pickup" checked>
+								<input type="radio" name="delivery" id="pickup" value = "0" autocomplete="off" checked> Pickup
 							</label>
-							<label class="btn btn-secondary col-md-5">
-								<input
-									type="radio"
-									name="options"
-									id="deliver"
-									autocomplete="off"
-								/>
-								Deliver
+							<label class="btn btn-secondary" for="deliver">
+								<input type="radio" name="delivery" id="deliver" value = "1" autocomplete="off"> Deliver
 							</label>
 						</div>
-
-						<div id="delivery-address" style="display: none">
-							<input
-								type="text"
-								class="form-control"
-								id="addressInput"
-								placeholder="Enter delivery address"
-							/>
+						
+						<div id="delivery-address" style="display: none, margin: 5px 10px; padding: 5px;">
+							<input type="text" class="form-control" disabled  name="location" id="addressInput" placeholder="Enter delivery address">
 						</div>
-
+						
 						<button
 							type="submit"
-							class="btn btn-primary btn-block mx-3 col-md-5"
+							id = "submitBtn"
+							class="btn btn-primary btn-block mx-3 col-md-5  "
 						>
 							Submit Request
-						</button>
-						<button
-							type="button"
-							class="btn btn-secondary btn-block col-md-5"
-							data-bs-toggle="modal"
-							data-bs-target="#orderHistoryModal"
-						>
-							Order History
 						</button>
 					</form>
 				</div>
@@ -161,91 +128,236 @@
 	</div>
 </div>
 
-
-<!-- order_request_form.html -->
-
-<div
-	class="modal fade"
-	id="orderHistoryModal"
-	tabindex="-1"
-	aria-labelledby="orderHistoryModalLabel"
-	aria-hidden="true"
->
-	<div class="modal-dialog modal-dialog-centered">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="orderHistoryModalLabel">Order History</h5>
-				<div class="d-flex justify-content-end">
-					<div
-						class="btn-group btn-group-sm"
-						role="group"
-						aria-label="Small button group"
-					>
-						<!-- <h5 class="m-2"> status:</h5> -->
-						<button
-							type="button"
-							id="deliveryBtn"
-							class="btn btn-outline-primary"
+<div class="order-history-box">
+	<div class="row justify-content-center">
+		<div class="col">
+			<div class="order-box mt-3 shadow">
+				<div class="card-body py-2 px-md-1">
+					<div class="d-flex justify-content-end">
+						<div
+							class="btn-group btn-group-md"
+							role="group"
+							aria-label="Small button group"
 						>
-							delivery
-						</button>
-						<button
-							type="button"
-							id="pickupBtn"
-							class="btn btn-outline-primary"
-						>
-							pickup
-						</button>
-						<button
-							type="button"
-							id="completeBtn"
-							class="btn btn-outline-success"
-						>
-							complete
-						</button>
+							<button
+								type="button"
+								id="deliveryBtn"
+								class="btn btn-outline-primary"
+							>
+								delivery
+							</button>
+							<button
+								type="button"
+								id="pickupBtn"
+								class="btn btn-outline-primary"
+							>
+								pickup
+							</button>
+							<button
+								type="button"
+								id="confirmBtn"
+								class="btn btn-outline-success"
+							>
+								processing
+							</button>
+							<button
+								type="button"
+								id="completeBtn"
+								class="btn btn-outline-success"
+							>
+								completed
+							</button>
+						</div>
 					</div>
 				</div>
-			</div>
-			<div class="modal-body">
-				<!-- This content will be displayed in the modal -->
-				<div
-					class="list-group"
-					id="orderList"
-					style="max-height: 400px; overflow-y: auto; padding: 5px"
-				>
-					{% for order in orders_by_user_id %}
-					<a
-						href="#"
-						data-order-id="{{ order.id }}"
-						data-delivery="{{ order.delivery }}"
-						data-status="{{ order.status }}"
-						class="list-group-item list-group-item-action my-1"
-						>{{ order.request_time.strftime('%d-%m-%Y') }} - {{ order.location
-						}} {{order.status }}
-					</a>
-					{% endfor %}
+		
+					<!-- This content will be displayed in the modal -->
+					<div class="list-group" id="orderList">
+						{% for order in orders_by_user_id %}
+						<div class = "list-item">
+							<a data-toggle="modal" data-target="#orderDetailModal"
+								href="#"
+								data-order-id="{{ order.id }}"
+								data-delivery="{{ order.delivery }}"
+								data-status="{{ order.status }}"
+								data-allergies="{{ order.allergies }}"
+								data-dietary-restriction="{{ order.dietary_restriction }}"
+								data-request-time="{{ order.request_time }}"
+								data-dispense-time="{{ order.dispense_time }}"
+								data-location="{{ order.location }}"
+								class="list-group-item list-group-item-action my-1"
+								style="background-color: {% if order.status == 'pending' %}rgba(187, 231, 231, 0.7);{%else%}
+								rgba(63, 146, 99, 0.825);;{% endif %}"
+								>{{ order.request_time.strftime('%d-%m-%Y') }}
+							</a>
+						</div>						
+						{% endfor %}
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+<!-- order_request_form.html -->
+<div class="modal fade" id="orderDetailModal" tabindex="-1" role="dialog" aria-labelledby="orderDetailModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="orderDetailModalLabel">Order #<span id="orderId"></span> - <span id="headerNote"></span></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Populate modal body with order details -->
+				<span hidden id="status"></span>
+				<span hidden id="location"></span>
+				<span hidden id="delivery"></span>
+				<span hidden id="requestTime"></span>
+				<span hidden id="dispenseTime"></span>
+                
+                <h5><strong>Allergies:&emsp;&emsp;&emsp;</strong> <span id="allergies"></span></h5>
+                <h5><strong>Dietary Restr:&emsp; </strong><span id="dietaryRestriction"></span></h5>
+				
+                <!-- Conditional button based on status -->
+            </div>
+            <div class="modal-footer">
+				<button type="button" id="editButton" style="display: none;"   data-order-id="" class="btn btn-primary">Edit</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <!-- Add additional buttons or actions if needed -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- EDIT MODAL -->
+<div class="modal fade" id="editModal" tabindex="" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel" style="font-size: 1.2em;">Edit Order Details <span id="orderIdDisplay"></span></h5> <!-- Increase font size -->
+            </div>
+            <div class="modal-body" style=" display: flex;
+			justify-content: center; padding: 10px; width: auto;"> <!-- Increase padding -->
+                <input type="hidden" id="orderIdInput">
+
+				
+                <div class="form-group editB">
+					<strong><label for="allergiesInput"  class="float-right">Allergies:</label></strong>
+                    <ul id="allergiesList"></ul>
+                </div>
+                <div class="form-group editB">
+					<strong><label for="dietaryRestrictionInput" class="float-right">Dietary Restrictions:</label></strong>
+                    <ul id="dietaryList"  ></ul>
+                </div>
+                <!-- Add other fields for editing -->
+            </div>
+			<div class="modal-footer">
+				<button type="button " id="saveBtn" class="btn btn-primary float-right ">Save Changes</button>
+				<button type="button " id="deleteBtn" class="btn btn-danger float-right ">Delete Order</button>
+			</div>
+        </div>
+               
+    </div>
+</div>
+
+
+<!-- JavaScript to handle modal content -->
+<script>
+	document.addEventListener("DOMContentLoaded", function() {
+        // Get the labels
+        var pickupLabel = document.querySelector('[for="pickup"]');
+        var deliverLabel = document.querySelector('[for="deliver"]');
+
+        // Get the delivery address input
+        var deliveryAddressDiv = document.getElementById("delivery-address");
+        var addressInput = document.getElementById("addressInput");
+
+        // Add event listener to the labels
+        deliverLabel.addEventListener("click", function() {
+            // If "Deliver" option is clicked, show the delivery address input field
+            deliveryAddressDiv.style.display = "block";
+            addressInput.disabled = false;
+        });
+
+        pickupLabel.addEventListener("click", function() {
+            // If "Pickup" option is clicked, hide the delivery address input field
+            deliveryAddressDiv.style.display = "none";
+            addressInput.disabled = true;
+        });
+    });
+
+		//CHecking limit_reached by last order
+		{/* 
+			document.addEventListener("DOMContentLoaded", function() {
+			var limitReached = {% if limit_reached %}true{% else %}false{% endif %};
+			var limitResetDays = {{ days_left }};
+			var submitBtn = document.getElementById('submitBtn');
+			if (limitReached) {
+				var inputFields = document.querySelectorAll('input');
+				inputFields.forEach(function(input) {
+					input.disabled = true;
+				});
+				var radioLabels = document.querySelectorAll('.order-type-buttons label');
+				radioLabels.forEach(function(label) {
+					label.classList.add('disabled');
+				});
+	
+				submitBtn.textContent = `Days Left: ${limitResetDays}`;
+            	submitBtn.disabled = true;
+				submitBtn.classList.add('btn-danger')
+			}
+		});
+		 
+		*/}
+	
+	document.addEventListener("DOMContentLoaded", function() {
+        var orderLinks = document.querySelectorAll('.list-group-item');
+
+        orderLinks.forEach(function(link) {
+            link.addEventListener('click', function() {
+                var orderId = this.getAttribute('data-order-id');
+                var delivery = this.getAttribute('data-delivery');
+                var status = this.getAttribute('data-status');
+				var allergies = this.getAttribute('data-allergies');
+				var dietaryRestriction = this.getAttribute('data-dietary-restriction');
+				var requestTime = this.getAttribute('data-request-time');
+				var dispenseTime = this.getAttribute('data-dispense-time');
+				var location = this.getAttribute('data-location');
+	
+				
+                document.getElementById('orderId').textContent = orderId;
+                document.getElementById('delivery').textContent = delivery;
+                document.getElementById('status').textContent = status;
+				document.getElementById('allergies').textContent = allergies;
+				document.getElementById('dietaryRestriction').textContent = dietaryRestriction;
+				document.getElementById('location').textContent = location;
+				document.getElementById('dispenseTime').textContent = dispenseTime;
+				document.getElementById('requestTime').textContent = requestTime;
+				editButton.setAttribute('data-order-id', orderId);
+				document.getElementById('headerNote').textContent = status;
+				
+				
+
+                // Update conditional button visibility and status handling when the modal is opened
+                $('#orderDetailModal').on('shown.bs.modal', function () {
+                    if (status === 'pending') {
+						var editButton = document.getElementById('editButton');
+                        editButton.style.display = 'block';
+                        editButton.disabled = false;
+                    } else {
+                        var editButton = document.getElementById('editButton');
+                        editButton.style.display = 'none';
+                        editButton.disabled = true;
+                    }
+                });
+				
+            });
+        });
+    });
+</script>
+
 
 <script src="{{ url_for('static', filename='js/order_request.js') }}"></script>
+<script src="{{ url_for('static', filename='js/order_edit.js') }}"></script>
 <script src="{{ url_for('static', filename='js/order_history.js') }}"></script>
-<script>
-	const deliverButton = document.getElementById('deliver');
-	const deliveryAddress = document.getElementById('delivery-address');
-
-	deliverButton.addEventListener('change', function () {
-		if (this.checked) {
-			deliveryAddress.style.display = 'block';
-		} else {
-			deliveryAddress.style.display = 'none';
-		}
-	});
-
-	// Initially check if "Deliver" option is selected, then display address input
-	if (deliverButton.checked) {
-		deliveryAddress.style.display = 'block';
-	}
-</script>

@@ -1,11 +1,11 @@
-//DISPLAYING ORDER HISTORY
+//DISPLAYING ORDER HISTORY SORTING BUTTONs
 
 document.addEventListener('DOMContentLoaded', function () {
 	// Get references to the buttons and order list
 	const deliveryBtn = document.getElementById('deliveryBtn');
 	const pickupBtn = document.getElementById('pickupBtn');
 	const completeBtn = document.getElementById('completeBtn');
-	// const pendingBtn = document.getElementById('pendingBtn');
+	const confirmBtn = document.getElementById('confirmBtn');
 	const orderList = document.getElementById('orderList');
 
 	// Function to reset the display of all orders
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		// Show only orders with status "complete"
 		const orders = orderList.querySelectorAll('.list-group-item');
 		orders.forEach((order) => {
-			if (order.dataset.status === 'complete') {
+			if (order.dataset.status === 'completed') {
 				order.style.display = 'block';
 			} else {
 				order.style.display = 'none';
@@ -28,17 +28,17 @@ document.addEventListener('DOMContentLoaded', function () {
 		});
 	});
 
-	// pendingBtn.addEventListener('click', function () {
-	// 	// Show only orders with status "complete"
-	// 	const orders = orderList.querySelectorAll('.list-group-item');
-	// 	orders.forEach((order) => {
-	// 		if (order.dataset.status === 'pending') {
-	// 			order.style.display = 'block';
-	// 		} else {
-	// 			order.style.display = 'none';
-	// 		}
-	// 	});
-	// });
+	confirmBtn.addEventListener('click', function () {
+		// Show only orders with status "complete"
+		const orders = orderList.querySelectorAll('.list-group-item');
+		orders.forEach((order) => {
+			if (order.dataset.status === 'confirmed') {
+				order.style.display = 'block';
+			} else {
+				order.style.display = 'none';
+			}
+		});
+	});
 
 	// Add event listener to the pending button (optional)
 	deliveryBtn.addEventListener('click', function () {
@@ -58,19 +58,6 @@ document.addEventListener('DOMContentLoaded', function () {
 		const orders = orderList.querySelectorAll('.list-group-item');
 		orders.forEach((order) => {
 			if (order.dataset.delivery === 'False' && order.dataset.status === 'pending') {
-				order.style.display = 'block';
-			} else {
-				order.style.display = 'none';
-			}
-		});
-	});
-
-
-	completeBtn.addEventListener('click', function () {
-		// Show all orders
-		const orders = orderList.querySelectorAll('.list-group-item');
-		orders.forEach((order) => {
-			if (order.dataset.status === 'completed') {
 				order.style.display = 'block';
 			} else {
 				order.style.display = 'none';

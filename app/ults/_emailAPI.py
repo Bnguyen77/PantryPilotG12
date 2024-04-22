@@ -31,6 +31,7 @@ Pantry Pilot Team"""
     server.sendmail(sender_email, receiver_email, message)
 
 
+
 def order_email(receiver_email,username,order):
     formatted = order.request_time.strftime("%Y-%m-%d %H:%M")
     message = f"""\
@@ -42,7 +43,6 @@ This email is to confirm you have successfully placed an order with Pantry Pilot
 
 Your order is as follows:
 Order ID: {order.id}
-Preferred Item(s): {order.prefer_item}
 Dietary Restriction(s): {order.dietary_restriction}
 Delivery: {order.delivery}
 Location: {order.location}
@@ -55,7 +55,9 @@ From,
 Pantry Pilot Team"""
     server.sendmail(sender_email, receiver_email, message)
 
-def order__accepted_email(receiver_email,username,order):
+
+
+def order_accepted_email(receiver_email,username,order):
     formatted = order.request_time.strftime("%Y-%m-%d %H:%M")
     message = f"""\
 Subject: Order Accepted
@@ -66,7 +68,6 @@ Your order has been acccepted by the pantry and will be fufilled!
 
 Your order is as follows:
 Order ID: {order.id}
-Preferred Item(s): {order.prefer_item}
 Dietary Restriction(s): {order.dietary_restriction}
 Delivery: {order.delivery}
 Location: {order.location}
@@ -78,6 +79,9 @@ Request Time: {formatted}
 From,
 Pantry Pilot Team"""
     server.sendmail(sender_email, receiver_email, message)
+
+
+
 
 def order_denied_email(receiver_email,username,order):
     formatted = order.request_time.strftime("%Y-%m-%d %H:%M")
@@ -91,7 +95,6 @@ Please try again later or create an order with differnt items.
 
 Your order was as follows:
 Order ID: {order.id}
-Preferred Item(s): {order.prefer_item}
 Dietary Restriction(s): {order.dietary_restriction}
 Delivery: {order.delivery}
 Location: {order.location}
@@ -103,6 +106,9 @@ Request Time: {formatted}
 From,
 Pantry Pilot Team"""
     server.sendmail(sender_email, receiver_email, message)
+    
+    
+    
 
 def order_fufilled_email(receiver_email,username,order):
     formatted = order.request_time.strftime("%Y-%m-%d %H:%M")
@@ -116,7 +122,6 @@ We hope you enjoy your items, if there are any issues please contact us at pantr
 
 Your order was as follows:
 Order ID: {order.id}
-Preferred Item(s): {order.prefer_item}
 Dietary Restriction(s): {order.dietary_restriction}
 Delivery: {order.delivery}
 Location: {order.location}

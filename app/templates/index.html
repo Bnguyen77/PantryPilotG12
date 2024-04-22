@@ -4,24 +4,21 @@
 />
 
 {% extends "partials/_layout.html" %} {% include "partials/_header.html" %}
-{%block content%} {% if 'user_id' in session %}
+{%block content%} 
+{% if 'user_id' in session %}
 <!-- User is in session -->
-<div class="username">
-	<h2>Welcome, {{ session['user_name'], session['role'] }}!</h2>
-</div>
-
 <!-- Add other content or actions for authenticated users -->
 <div class="main-container">
 	{% include "partials/_info.html" %}
 	<div class="right-container">
 		{% include "partials/_orders.html" %}
-		{% include "partials/_orders_history.html" %}
-		
 	</div>
 </div>
 {%else %}
 <!-- User is not in session -->
-<p>Please log in to access this content.</p>
+{% include "welcome.html" %}
+
 <!-- Add login form or other content for non-authenticated users -->
 
-{% endif %} {%endblock%}
+{% endif %}
+{%endblock%}
