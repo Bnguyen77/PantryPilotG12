@@ -4,7 +4,7 @@
 />
 {% extends "partials/_layout.html" %} {% include "partials/_header.html" %}
 {%block content %}
-<div class="container" style="width: 80%; background-color: white">
+<div class="container" style="width: 70%; background-color: white">
 	<div class="row justify-content-center">
 		<!-- Info box on the left -->
 		{% include "partials/_info.html" %}
@@ -16,7 +16,13 @@
 			<div class="scrollable-container">
 				<div class="scrollable-cards">
 					{% for order in PDO %}
-					<div class="col-mb-5 m-1">
+					<div
+						class="col-mb-5 m-1"
+						data-order-id="{{ order.id }}"
+						type="button"
+						data-toggle="modal"
+						data-target="#orderDetailsModal{{ order.id }}"
+					>
 						<div class="card mb-4 m-1">
 							<div class="card-body p-1">
 								<div class="d-flex align-items-center px-1">
@@ -36,6 +42,7 @@
 							</div>
 						</div>
 					</div>
+					{% include "partials/_order_detail_modal.html" %}
 					{% endfor %}
 				</div>
 			</div>
@@ -77,7 +84,7 @@
 				</div>
 			</div>
 
-			<h2>Confirmed Orders</h2>
+			<h2>Processing Orders</h2>
 			<div class="scrollable-container">
 				<div class="scrollable-cards">
 					{% for order in CO %}
@@ -111,13 +118,16 @@
 					{% endfor %}
 				</div>
 			</div>
-
-			<!-- Add similar sections for other orders -->
+			<!-- Modal -->
+			
 		</div>
 	</div>
 </div>
 
 <script>
+
+	
+
 	$(document).ready(function () {
 		$('[data-toggle="popover"]').popover();
 	});

@@ -1,18 +1,17 @@
 
 .orders-container {
-	border: 2px solid blue;
-	width: 40%;
+	width: 50%;
 	padding: 0;
+	/* margin-left: 200px; */
 	/* Make _orders occupy the remaining space (90%) of the container */
-	background-color: lightgreen; /* Example background color */
+	/* background-color: lightgreen; Example background color */
 	display: inline-block;
 }
 
 .order-box {
 	display: inline-block;
 	width: 100%;
-	margin: 0;
-	border: 2px solid red;
+	height: 700px;
 }
 
 ul{
@@ -20,7 +19,32 @@ ul{
 }
 
 .order-type-buttons {
-	border: 2px solid black;
 	padding: 10px;
 	margin: 10px;
 }   
+
+.order-history-box{
+	width: 50%;
+	height: 200px;
+	float: right	
+}
+
+.order-history-box .list-group {
+	max-height: 600px; /* Adjust the height as needed */
+	overflow-y: auto;
+	padding: 10px;
+}
+.order-history-box .list-group .list-item {
+	border-radius: 20px;
+}
+
+.editB{
+	padding: 10px;
+	font-size: 1.1em;
+	float: left;
+	margin: auto;
+}
+
+.float-right{
+	float: right;
+}

@@ -22,8 +22,9 @@ def Register():
             return render_template("register.html", form=form)
         else:
             # hashed_password = generate_password_hash(form.password.data, method="sha256")
+            is_volunteer = bool(int(request.form.get('is_volunteer', 0)))             
             new_user = User(name=form.name.data, user_name=form.user_name.data,
-                            email=form.email.data, password=form.password.data)
+                            email=form.email.data, password=form.password.data, is_admin = is_volunteer)
             db.session.add(new_user)
             db.session.commit()
 

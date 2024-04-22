@@ -1,4 +1,5 @@
-from flask import render_template, Blueprint, request, redirect, url_for, session, flash
+from flask import render_template, Blueprint, request, redirect, url_for, session, flash, jsonify
+from datetime import datetime, timedelta
 from ..models.user import User, Avatar, db
 from ..models.order import Order
 from ..ults.forms import LoginForm, RegisterForm
@@ -56,10 +57,24 @@ def index():
         user = User.query.get(user_id)
         orders_by_user_id = Order.query.filter_by(
             user_id=user_id).order_by(desc(Order.request_time)).all()
-        return render_template("index.html", user = user,orders_by_user_id=orders_by_user_id)
+        
+          # Check if the latest order was made more than 7 days ago
+        today = datetime.now().date()
+        latest_order = orders_by_user_id[0] if orders_by_user_id else None
+        seven_days_ago = datetime.now() - timedelta(days=7)
+        if latest_order and latest_order.request_time >= seven_days_ago:
+            limit_reached = True
+            days_left = (latest_order.request_time - seven_days_ago).days
+        else:
+            limit_reached = False
+            days_left = (seven_days_ago - latest_order.request_time).days if latest_order else 7
+
+        
+        return render_template("index.html", user = user, orders_by_user_id=orders_by_user_id, days_left=days_left, limit_reached = limit_reached)
     else:
         # This should redirect to landing page (before logged in), instead of views.login
-        return redirect(url_for("views.login"))
+        return render_template("index.html")
+        # return redirect(url_for("views.login"))
 
 
 # ROUTING FOR USER
@@ -131,3 +146,20 @@ def admin():
 
     flash("unauthorized access", "danger")
     return redirect(url_for("views.index"))
+
+
+@views.route('/api/order/<order_id>', methods=['GET'])
+def get_order(order_id):
+    # Fetch order data from the database based on order_id
+    order = Order.query.get(order_id)
+    if order:
+        # Convert order data to JSON format and return
+        return jsonify({
+            'id': order.id,  
+            'allergies': order.allergies,
+            'dietary_restriction': order.dietary_restriction,    
+            'allergies_options': ['nuts', 'milk', 'shellfish', 'soy', 'eggs', 'wheat'],
+            'dietary_restriction_options': ['vegetarian', 'vegan', 'gluten-free', 'lactose-free', 'halal', 'kosher']
+        })
+    else:
+        return jsonify({'error': 'Order not found'}), 404

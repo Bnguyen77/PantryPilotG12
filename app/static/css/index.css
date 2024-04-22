@@ -2,7 +2,7 @@
     margin: 10px;
     text-align: center;
     color: white;
-    font-size: 30px;
+    font-size: 50px;
     -webkit-text-stroke: 0.5px gray;
 }
 
@@ -15,13 +15,14 @@ h1 {
 }
 
 .main-container {
+    background: linear-gradient(to bottom, #e2e2e2de, #696969e0);
     display: flex;
     width: 70%; /* Set the container to take up 80% of the page */
     margin: 0 auto; /* Center the container */
+
 }
 
 .right-container{
-    background-color: antiquewhite;
     width: 80%;
 }
 
